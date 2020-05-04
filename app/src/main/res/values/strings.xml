@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">bookstore</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget password</string>
+    <string name="submit">Submit</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="pass_conf">password confirmation</string>
+
+</resources>
