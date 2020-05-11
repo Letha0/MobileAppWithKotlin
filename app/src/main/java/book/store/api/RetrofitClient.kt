@@ -1,6 +1,8 @@
 package book.store.api
 
+import android.util.Log
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -9,13 +11,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 
         private const val BASE_URL: String = "http://10.0.2.2:8000/"
 
+        private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+
+        private val okHttp = OkHttpClient.Builder().addInterceptor(logger)
+
 
         private val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val original = chain.request()
 
                 val requestBuilder = original.newBuilder()
-                    //.addHeader( "Authorization", AUTH)
+                    .addHeader( "Content-Type", "application/json")
                     .method(original.method, original.body)
 
                 val request = requestBuilder.build()
@@ -28,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
+                .client(okHttp.build())
                 .build()
 
 

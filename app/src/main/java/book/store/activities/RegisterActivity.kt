@@ -1,11 +1,13 @@
 package book.store.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import book.store.R
 import book.store.api.RetrofitClient
-import book.store.models.RegisterResponse
+import book.store.api.RegisterResponse
+import book.store.api.Validation
 import book.store.requests.RegisterRequest
 import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
@@ -33,14 +35,34 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+
+            if(!Validation.isValidEmail(email)){
+                input_email.error = "Enter correct email"
+                input_email.requestFocus()
+                return@setOnClickListener
+            }
+
             if(password.isEmpty()) {
                 input_password.error = "Password required"
                 input_password.requestFocus()
                 return@setOnClickListener
             }
 
+            if(password.length < 10) {
+                input_password.error = "Password has to be at least 10 char long"
+                input_password.requestFocus()
+                return@setOnClickListener
+            }
+
+
             if(passwordConfirmation.isEmpty()) {
                 input_pass_conf.error = "Password confirmation required"
+                input_pass_conf.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(passwordConfirmation!=password) {
+                input_pass_conf.error = "Passwords fields are not equals"
                 input_pass_conf.requestFocus()
                 return@setOnClickListener
             }
@@ -64,11 +86,21 @@ class RegisterActivity : AppCompatActivity() {
                     }
 
                     override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-                        Toast.makeText(applicationContext, response.body()?.status, Toast.LENGTH_LONG).show()
+                        if (response.code() == 200)
+                        Toast.makeText(applicationContext, "Register successful. Check your email and confirm your account", Toast.LENGTH_LONG).show()
+                        if (response.code() == 422)
+                            Toast.makeText(applicationContext, "Registration failed. Please, make sure you put in a correct credential and you already have not account with this email.", Toast.LENGTH_LONG).show()
+                        else
+                            Toast.makeText(applicationContext, response.code().toString(), Toast.LENGTH_LONG).show()
                     }
 
-                })
+                })//response.code().toString()
 
+        }
+
+        btn_signIn.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 
