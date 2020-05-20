@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import book.store.R
-import book.store.api.EnterNewPasswordResponse
-import book.store.api.RegisterResponse
 import book.store.api.RetrofitClient
 import book.store.requests.EnterNewPasswordRequest
-import book.store.requests.RegisterRequest
+import book.store.api.EnterNewPasswordResponse
 import kotlinx.android.synthetic.main.activity_enternewpass.*
 import retrofit2.Call
 import retrofit2.Callback

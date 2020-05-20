@@ -1,6 +1,7 @@
 package book.store.api
 
 import android.text.format.DateFormat
+import book.store.models.Book
 import com.google.gson.annotations.SerializedName
 import java.io.ObjectOutput
 import java.util.*
@@ -21,3 +22,5 @@ data class EnterNewPasswordResponse( val id: Int,
                                      @SerializedName("updated_at")
                                      val updatedAt: String
 )
+
+data class BookResponse (val Books: List<Book>)

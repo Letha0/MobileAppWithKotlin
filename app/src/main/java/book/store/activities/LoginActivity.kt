@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import book.store.R
 import book.store.api.*
 import book.store.requests.LoginRequest
+import book.store.api.Validation
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.input_email
 import kotlinx.android.synthetic.main.activity_login.input_password

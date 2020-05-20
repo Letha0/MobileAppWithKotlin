@@ -1,5 +1,7 @@
 package book.store.api
 
+import book.store.api.*
+import book.store.models.Book
 import book.store.requests.*
 import retrofit2.http.*
 
@@ -31,6 +33,9 @@ interface Api {
     fun resetPass(
         @Body create: EnterNewPasswordRequest
     ): retrofit2.Call<EnterNewPasswordResponse>
+
+    @GET("api/books")
+    fun getBooks(): retrofit2.Call<List<Book>>
 
 
 }
