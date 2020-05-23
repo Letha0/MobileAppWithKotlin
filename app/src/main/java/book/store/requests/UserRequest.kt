@@ -1,9 +1,7 @@
-package book.store.models
-
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class User (val id:Int,
+data class UserRequest (val id:Int,
                  val name:String,
                  val surname: String,
                  val email: String,
@@ -22,9 +20,3 @@ data class User (val id:Int,
 
 
 )
- data class viewUser(
-     val id:Int,
-     val name:String,
-     val surname: String,
-     val email: String
- )

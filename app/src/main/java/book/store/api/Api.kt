@@ -1,7 +1,9 @@
 package book.store.api
 
+import UserRequest
 import book.store.api.*
 import book.store.models.Book
+import book.store.models.User
 import book.store.requests.*
 import retrofit2.http.*
 
@@ -37,5 +39,14 @@ interface Api {
     @GET("api/books")
     fun getBooks(): retrofit2.Call<List<Book>>
 
+    @GET("api/users/{id}")
+    fun getUser(
+        @Path("id") id: Int
+    ): retrofit2.Call<UserResponse>
+
+    @GET("api/auth/me")
+    fun getAccount(
+        @Header("Authorization")  token: String
+    ) : retrofit2.Call<UserResponse>
 
 }

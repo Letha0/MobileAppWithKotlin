@@ -3,6 +3,7 @@ package book.store.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import book.store.BookAdapter
 import book.store.R
+import book.store.SessionManager
 import book.store.api.Api
 import book.store.models.Book
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private var books = listOf<Book>()
     private lateinit var apiService: Api
     private lateinit var bookAdapter: BookAdapter
+    lateinit var btnLogout:Button
+    lateinit var session: SessionManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
 
 
 

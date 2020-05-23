@@ -1,12 +1,15 @@
 package book.store.api
 
+import android.webkit.CookieManager
+import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.CookieHandler
 
 
-    object RetrofitClient {
+object RetrofitClient {
 
         private const val BASE_URL: String = "http://10.0.2.2:8000/"
 
@@ -23,6 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory
                 val requestBuilder = original.newBuilder()
                     .addHeader( "Content-Type", "application/json")
                     .method(original.method, original.body)
+
+                val builder = OkHttpClient.Builder()
 
                 val request = requestBuilder.build()
                 chain.proceed(request)
