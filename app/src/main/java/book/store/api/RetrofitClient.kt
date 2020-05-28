@@ -11,7 +11,7 @@ import java.net.CookieHandler
 
 object RetrofitClient {
 
-        private const val BASE_URL: String = "http://10.0.2.2:8000/"
+        private const val BASE_URL: String = "http://bookstore.dizajnstudio.eu/"
 
         private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 

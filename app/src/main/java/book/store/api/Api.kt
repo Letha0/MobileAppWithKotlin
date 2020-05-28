@@ -49,4 +49,15 @@ interface Api {
         @Header("Authorization")  token: String
     ) : retrofit2.Call<UserResponse>
 
+    @GET("api/users")
+    fun getAllUsers(
+        @Header("Authorization")  token: String
+    ) : retrofit2.Call<List<User>>
+
+    @GET( "api/user/{id}")
+    fun getUserToEdit(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ) : retrofit2.Call<User>
+
 }

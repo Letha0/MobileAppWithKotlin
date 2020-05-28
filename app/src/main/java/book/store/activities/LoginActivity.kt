@@ -2,6 +2,7 @@ package book.store.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import book.store.R
@@ -9,6 +10,7 @@ import book.store.SessionManager
 import book.store.api.*
 import book.store.requests.LoginRequest
 import book.store.api.Validation
+import book.store.ui.profile.ProfileFragment
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.input_email
 import kotlinx.android.synthetic.main.activity_login.input_password
@@ -19,6 +21,8 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     lateinit var session: SessionManager
+    private val profileFragment = ProfileFragment()
+    private val fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,15 +72,30 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+
+
                         if (response.code() == 200)
                             {Toast.makeText(applicationContext, "You are logged in", Toast.LENGTH_LONG).show()
                                 session.createLoginSession(response.body()?.token!!)
 
+                                session.getDetailOfUser(email)
                                 val i = Intent (applicationContext, MainActivity::class.java)
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                 startActivity(i)
                             }
+
+                        if (response.code() == 200 && email == "admin@bookstore.io")
+                        {Toast.makeText(applicationContext, "You are logged in", Toast.LENGTH_LONG).show()
+                            session.createLoginSession(response.body()?.token!!)
+
+                            val i = Intent (applicationContext, AdminActivity::class.java)
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(i)
+                            finish()
+                        }
+
                         if (response.code() == 401)
                             Toast.makeText(applicationContext, "Something went wrong. Check your email and password and try again.", Toast.LENGTH_LONG).show()
                         else

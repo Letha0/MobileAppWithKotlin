@@ -27,7 +27,8 @@ data class Book (
     @SerializedName("created_at")
     val createdAt: Date,
     @SerializedName("updated_at")
-    val updatedAt: Date
+    val updatedAt: Date,
    // val photos: String
+    val opinions: List<Opinion>
 
 )

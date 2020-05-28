@@ -1,32 +1,56 @@
 package book.store.ui.home
 
-import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import book.store.BookAdapter
 import book.store.R
-import book.store.api.Api
 import book.store.api.RetrofitClient
 import book.store.models.Book
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Response
 
+
 class HomeFragment : Fragment() {
 
+
     private lateinit var homeViewModel: HomeViewModel
+
+    private var isFirstBackPressed = false
 
     private var books = listOf<Book>()
     private lateinit var apiService: RetrofitClient
     private lateinit var bookAdapter: BookAdapter
+
+   /*override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    if(isFirstBackPressed){
+                        finish()
+                    } else {
+                        isFirstBackPressed = true
+                        Toast.makeText(applicationContext, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                        Handler().postDelayed({
+                            isFirstBackPressed = false
+
+                        }, 3000)
+                    }
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }*/
+   open fun onBackPressed() = true
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -48,11 +72,28 @@ class HomeFragment : Fragment() {
         refreshLayout.setOnRefreshListener {
             fetchBooks()
         }
-        books_recyclerview.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-
+        books_recyclerview.layoutManager = GridLayoutManager(requireContext(), 2)
 
 
         fetchBooks()
+
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if(isFirstBackPressed){
+
+                        activity?.finish()
+                    } else {
+                        isFirstBackPressed = true
+                        Toast.makeText(requireContext(), "Press back again to exit", Toast.LENGTH_SHORT).show()
+                        Handler().postDelayed({
+                            isFirstBackPressed = false
+
+                        }, 3000)
+                    }
+                }
+
+            })
     }
 
 
@@ -83,6 +124,7 @@ class HomeFragment : Fragment() {
             })
 
     }
+
 
 
 }

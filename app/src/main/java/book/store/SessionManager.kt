@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import book.store.activities.LoginActivity
 import book.store.activities.MainActivity
+import java.util.concurrent.TimeUnit
 
 
 class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te cuda, jakbyś Anka znowu szukała ;*
@@ -25,14 +26,14 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         get(){
             return "Bearer " + pref.getString("TOKEN", null) //jak było TOKEN to nie działało, ale nie przypominam sobie, bym coś zmieniała... czarna magia
         }
-/*
-    val EMAIL :String
+
+    val EMAIL :String?
         get(){
             return pref.getString("EMAIL", null)
-        }*/
+        }
 
     companion object {
-        val PREF_NAME = "Bookstore"
+        val PREF_NAME = "bookstore"
         val IS_LOGIN: String = "isLoggedIn"
         private var mInstance: SessionManager? = null
 
@@ -69,12 +70,13 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         val user: Map<String,String> = HashMap<String,String>()
         return user
     }
-
+*/
     fun getDetailOfUser(email:String){
         editor.putBoolean(IS_LOGIN,true)
-        editor.putString(EMAIL,email)
+        editor.putString("EMAIL",email)
+        editor.putLong("ExpiredDate", System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(60));
         editor.commit()
-    }*/
+    }
 
     fun Logout()
     {

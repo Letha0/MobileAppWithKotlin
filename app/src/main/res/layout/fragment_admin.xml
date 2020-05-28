@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/fragment_admin"
+    tools:context=".activities.AdminActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="0dp">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/management_panel"
+                    android:textSize="36sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp">
+
+                <Button
+                    android:id="@+id/btn_authors"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/authors"
+                    android:text="Authors" />
+
+                <Button
+                    android:id="@+id/btn_books"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/books"
+                    android:text="Books" />
+
+                <Button
+                    android:id="@+id/btn_opinions"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/opinions"
+                    android:text="opinion"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_genres"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/genres"
+                    android:text="Genres"/>
+
+                <Button
+                    android:id="@+id/btn_orders"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/orders"
+                    android:text="Orders"/>
+
+                <Button
+                    android:id="@+id/btn_payments"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/payments"
+                    android:text="Payments"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <Button
+                    android:id="@+id/btn_publhouses"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/publhouse"
+                    android:text="Publishing Houses" />
+
+                <Button
+                    android:id="@+id/btn_series"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/series"
+                    android:text="Series" />
+
+                <Button
+                    android:id="@+id/btn_covertypes"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/covertypes"
+                    android:text="Cover Types" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <Button
+                    android:id="@+id/btn_users"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/users"
+                    android:onClick="btnUsers"
+                    android:text="Users" />
+
+                <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    tools:text="Logout"
+                    android:onClick="logout"/>
+
+                <Button
+                    android:id="@+id/btn12"
+                    android:layout_width="0dip"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    tools:ignore="VectorDrawableCompat"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

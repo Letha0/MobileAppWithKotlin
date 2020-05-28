@@ -41,5 +41,6 @@ data class UserResponse (val id:Int,
                          @SerializedName("created_at")
                          val createdAt: String,
                          @SerializedName("updated_at")
-                         val updatedAt: String)
-
+                         val updatedAt: String,
+                         val error: String
+)
