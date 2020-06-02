@@ -44,3 +44,21 @@ data class UserResponse (val id:Int,
                          val updatedAt: String,
                          val error: String
 )
+
+data class AddUserResponse(
+                            val id:Int,
+                            val name:String,
+                            val surname: String,
+                            val email: String,
+                            val error:String
+)
+
+data class AddAuthorResponse(val id: Int,
+                             val name:String,
+                             val surname:String,
+                             @SerializedName("date_birth")
+                             val dateOfBirth: String,
+                             @SerializedName("date_death")
+                             val dateOfDeath:String?,
+                             val description:String
+)

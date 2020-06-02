@@ -12,6 +12,7 @@ import book.store.SessionManager
 import book.store.activities.LoginActivity
 import kotlinx.android.synthetic.main.fragment_account.*
 import androidx.navigation.fragment.findNavController
+import book.store.activities.AdminActivity
 
 
 class AccountFragment : Fragment() {
@@ -20,6 +21,7 @@ class AccountFragment : Fragment() {
         fun newInstance() = AccountFragment()
     }
 
+    private val user = "admin@bookstore.io"
     private lateinit var viewModel: AccountViewModel
 
     lateinit var session: SessionManager
@@ -45,7 +47,9 @@ class AccountFragment : Fragment() {
         button.setOnClickListener {
             if(session.isLoggedIn())
             {
-
+                if(session.EMAIL==user)
+                startActivity(Intent(requireContext(), AdminActivity::class.java))
+                else
                 findNavController().navigate(R.id.navigate_to_profile_fragment)
             }
             else{

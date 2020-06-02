@@ -58,11 +58,7 @@ class ProfileFragment : Fragment() {
                         session.Logout()
                         val i = Intent(requireContext(), LoginActivity::class.java)
                         startActivity(i)
-                        Toast.makeText(
-                            activity,
-                            "Your session expired. Please login to continue.",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(activity,"Your session expired. Please login to continue.", Toast.LENGTH_LONG).show()
                     } else {
                         session.getDetailOfUser(response.body()?.email!!)
                         val email = session.EMAIL//response.body()?.email.toString()

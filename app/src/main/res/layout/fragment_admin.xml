@@ -47,7 +47,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/authors"
-                    android:text="Authors" />
+                    android:text="Authors"
+                    android:onClick="btnAuthors"/>
 
                 <Button
                     android:id="@+id/btn_books"
@@ -55,7 +56,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/books"
-                    android:text="Books" />
+                    android:text="Books"
+                    android:onClick="btnBooks"/>
 
                 <Button
                     android:id="@+id/btn_opinions"

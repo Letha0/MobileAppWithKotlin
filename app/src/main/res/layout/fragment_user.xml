@@ -28,7 +28,8 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="5dp"
                 android:background="#4CAF50"
-                android:text="Add user" />
+                android:text="Add user"
+                android:id="@+id/add_user"/>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

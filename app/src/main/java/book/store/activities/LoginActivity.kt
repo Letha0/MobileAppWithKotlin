@@ -2,7 +2,6 @@ package book.store.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import book.store.R
@@ -12,8 +11,6 @@ import book.store.requests.LoginRequest
 import book.store.api.Validation
 import book.store.ui.profile.ProfileFragment
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_login.input_email
-import kotlinx.android.synthetic.main.activity_login.input_password
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -83,11 +80,14 @@ class LoginActivity : AppCompatActivity() {
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                 startActivity(i)
+
                             }
 
                         if (response.code() == 200 && email == "admin@bookstore.io")
                         {Toast.makeText(applicationContext, "You are logged in", Toast.LENGTH_LONG).show()
                             session.createLoginSession(response.body()?.token!!)
+
+                            session.getDetailOfUser(email)
 
                             val i = Intent (applicationContext, AdminActivity::class.java)
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -118,4 +118,5 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
+
 }

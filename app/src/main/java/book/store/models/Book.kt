@@ -20,7 +20,7 @@ data class Book (
     val publishingHouseId: Int,
     val price: Float,
     @SerializedName("cover_image")
-    val coverImage: String,
+    val coverImage: String?,
     //var coverImage : List<CoverImage> = arrayListOf(),
    // @SerializedName("order_id")
     //val orderId: Int,
@@ -29,6 +29,7 @@ data class Book (
     @SerializedName("updated_at")
     val updatedAt: Date,
    // val photos: String
-    val opinions: List<Opinion>
+    val opinions: List<Opinion>,
+    val author: Author
 
 )

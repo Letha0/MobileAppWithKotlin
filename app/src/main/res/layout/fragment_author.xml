@@ -17,7 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             app:titleTextColor="@color/colorAccent"
-            app:title="Users"
+            app:title="Authors"
             android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
@@ -28,7 +28,8 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="5dp"
                 android:background="#4CAF50"
-                android:text="Add user" />
+                android:text="Add author"
+                android:id="@+id/add_author"/>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -41,9 +42,10 @@
         android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/users_recyclerview"
+            android:id="@+id/authors_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:clipToPadding="false"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

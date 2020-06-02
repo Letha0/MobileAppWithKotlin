@@ -15,4 +15,5 @@ class Validation {
         return if (email == null) false else pat.matcher(email).matches()
         }
     }
+
 }

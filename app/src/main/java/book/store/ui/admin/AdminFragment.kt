@@ -1,5 +1,7 @@
 package book.store.ui.admin
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -10,9 +12,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import book.store.R
 import book.store.SessionManager
+import book.store.activities.MainActivity
 
 class AdminFragment: Fragment() {
 
+    lateinit var session: SessionManager
     private var isFirstBackPressed = false
 
     override fun onCreateView(
@@ -23,6 +27,21 @@ class AdminFragment: Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_admin, container, false)
     }
+
+
+    override fun onStart() {
+
+        session = SessionManager(requireContext())
+
+        if(System.currentTimeMillis()>=session.ExpiredDate){
+
+            session.Logout()
+        }
+        super.onStart()
+    }
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

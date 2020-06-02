@@ -2,8 +2,7 @@ package book.store.api
 
 import UserRequest
 import book.store.api.*
-import book.store.models.Book
-import book.store.models.User
+import book.store.models.*
 import book.store.requests.*
 import retrofit2.http.*
 
@@ -60,4 +59,65 @@ interface Api {
         @Path("id") id: Int
     ) : retrofit2.Call<User>
 
+    @POST("/api/users")
+    fun addUser(
+        @Header("Authorization")  token: String,
+        @Body create: NewUserRequest
+    ): retrofit2.Call<AddUserResponse>
+
+    @DELETE("api/user/{id}")
+    fun deleteUser(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<User>
+
+    @GET("/api/authors")
+    fun getAllAuthors(
+        @Header("Authorization")  token: String
+    ) : retrofit2. Call<List<Author>>
+
+    @DELETE("api/author/{id}")
+    fun deleteAuthor(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<Author>
+
+    @PATCH("api/author/{id}")
+    fun editAuthor(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ) : retrofit2.Call<Author>
+
+    @POST("/api/authors")
+    fun addAuthor(
+        @Header("Authorization")  token: String,
+        @Body add: NewAuthorRequest
+    ): retrofit2.Call<AddAuthorResponse>
+
+    @GET ("api/author/{id}")
+    fun getAuthor(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<Author>
+
+    @GET("api/genres")
+    fun getAllGenres(
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<Genre>>
+
+    @GET("api/series")
+    fun getAllSeries(
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<Serie>>
+
+    @GET("api/covertype")
+    fun getAllCoverTypes(
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<CoverType>>
+
+    @GET("api/publhouse")
+    fun getAllPublHouses(
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<PublishingHouse>>
 }
+
