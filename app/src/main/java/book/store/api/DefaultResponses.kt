@@ -2,6 +2,7 @@ package book.store.api
 
 import android.text.format.DateFormat
 import book.store.models.Book
+import book.store.models.CoverType
 import book.store.models.User
 import com.google.gson.annotations.SerializedName
 import java.io.ObjectOutput
@@ -62,3 +63,22 @@ data class AddAuthorResponse(val id: Int,
                              val dateOfDeath:String?,
                              val description:String
 )
+
+data class AddBookResponse(
+    val id:Int,
+    val title:String,
+    val authorId: Int,
+    val genreId:Int,
+    val seriesId:Int,
+    val description: String,
+    val price: Float,
+    val coverTypeId:Int,
+    val publHouseId:Int,
+    val release:String,
+    val coverImage:String
+
+)
+
+data class SuccessResponse(val status: String)
+
+data class StringResponse (val code: String = "Cover Type has been deleted")

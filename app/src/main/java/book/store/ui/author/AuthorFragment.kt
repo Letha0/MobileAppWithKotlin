@@ -1,33 +1,29 @@
 package book.store.ui.author
 
-import androidx.lifecycle.ViewModelProviders
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import book.store.AuthorAdapter
-
 import book.store.R
 import book.store.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Author
-import book.store.ui.user.UserAddFragment
 import kotlinx.android.synthetic.main.fragment_author.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.refreshLayout
 import retrofit2.Call
 import retrofit2.Response
+
 
 class AuthorFragment : Fragment() {
 
     private var authors = listOf<Author>()
     lateinit var session: SessionManager
     private lateinit var authorAdapter: AuthorAdapter
-
-    private lateinit var viewModel: AuthorViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

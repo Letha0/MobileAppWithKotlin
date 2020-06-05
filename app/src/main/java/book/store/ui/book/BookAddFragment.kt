@@ -1,6 +1,5 @@
 package book.store.ui.book
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,14 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import book.store.R
 import book.store.SessionManager
+import book.store.api.AddBookResponse
+import book.store.api.AddUserResponse
 import book.store.api.RetrofitClient
 import book.store.models.*
-import book.store.requests.NewAuthorRequest
+import book.store.requests.AddBookRequest
 import kotlinx.android.synthetic.main.fragment_book_crud.*
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.Retrofit
 
 
 class BookAddFragment: Fragment() {
@@ -27,6 +27,18 @@ class BookAddFragment: Fragment() {
     private var inputSeries: Spinner? = null
     private var inputCoverType: Spinner? = null
     private var inputPublHouse: Spinner? = null
+    private var _idsAuthor: ArrayList<Int> = ArrayList<Int>()
+    private var _idsGenre: ArrayList<Int> = ArrayList<Int>()
+    private var _idsSeries: ArrayList<Int> = ArrayList<Int>()
+    private var _idsCoverType: ArrayList<Int> = ArrayList<Int>()
+    private var _idsPublHouse: ArrayList<Int> = ArrayList<Int>()
+    var authorPosition:Int = 0
+    private var genrePosition = 0
+    private var seriesPosition = 0
+    private var coverTypePosition = 0
+    private var publHousePosition = 0
+
+
 
 
     override fun onCreateView(
@@ -52,8 +64,10 @@ class BookAddFragment: Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val type = parent?.getItemIdAtPosition(position)!!.toInt()
-                session.getAuthorId(type + 1)
+                val id = _idsAuthor.get(position)
+                session.getAuthorId(id)
+                authorPosition = parent?.getItemIdAtPosition(position)!!.toInt()
+
             }
 
         }
@@ -66,8 +80,9 @@ class BookAddFragment: Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val type = parent?.getItemIdAtPosition(position)!!.toInt()
-                session.getGenreId(type + 1)
+                val id = _idsGenre.get(position)
+                session.getGenreId(id)
+                genrePosition = parent?.getItemIdAtPosition(position)!!.toInt()
             }
 
         }
@@ -80,8 +95,9 @@ class BookAddFragment: Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val type = parent?.getItemIdAtPosition(position)!!.toInt()
-                session.getSieriesId(type + 1)
+                val id = _idsSeries.get(position)
+                session.getSieriesId(id)
+                seriesPosition = parent?.getItemIdAtPosition(position)!!.toInt()
             }
 
         }
@@ -94,8 +110,9 @@ class BookAddFragment: Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val type = parent?.getItemIdAtPosition(position)!!.toInt()
-                session.getCoverTypeId(type + 1)
+                val id = _idsCoverType.get(position)
+                session.getCoverTypeId(id)
+                coverTypePosition = parent?.getItemIdAtPosition(position)!!.toInt()
             }
 
         }
@@ -108,8 +125,9 @@ class BookAddFragment: Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val type = parent?.getItemIdAtPosition(position)!!.toInt()
-                session.getPublHouseId(type + 1)
+                var id = _idsPublHouse.get(position)
+                session.getPublHouseId(id)
+                publHousePosition = parent?.getItemIdAtPosition(position)!!.toInt()
             }
 
         }
@@ -118,20 +136,38 @@ class BookAddFragment: Fragment() {
             val title = input_title.text.toString().trim()
             val description =input_description.text.toString().trim()
             val release = input_release.text.toString().trim()
-            val price = input_price.text.toString().trim()
+            val price = input_price.text.toString().trim().toFloat()
             val coverImage = input_coverImage.text.toString().trim()
             val authorId = session.authorId
-            input_author.setSelection(authorId)
+            input_author.setSelection(authorPosition)
             val genreId = session.genreId
-            input_genre.setSelection(genreId)
+            input_genre.setSelection(genrePosition)
             val seriesId = session.seriesId
-            input_series.setSelection(seriesId)
+            input_series.setSelection(seriesPosition)
             val coverType = session.coverTypeId
-            input_coverType.setSelection(coverType)
+            input_coverType.setSelection(coverTypePosition)
             val publishingHouseId = session.publishingHouseId
-            input_publHouse.setSelection(publishingHouseId)
+            input_publHouse.setSelection(publHousePosition)     //POSITION!! XD w końcu znazałam - zmienic tez w edit
 
 
+
+            RetrofitClient.instance.addBook(session.TOKEN, AddBookRequest(title, description, release,
+             price, coverImage), authorId, genreId, seriesId, coverType, publishingHouseId)
+                .enqueue(object : retrofit2.Callback<AddBookResponse>{
+                    override fun onFailure(call: Call<AddBookResponse>, t: Throwable) {
+                        Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onResponse(call: Call<AddBookResponse>, response: Response<AddBookResponse>) {
+                        if(response.code()==200){
+                            Toast.makeText(requireContext(), "Book added", Toast.LENGTH_SHORT).show()
+                        }
+                        else
+                            Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                    }
+
+
+                })
 
 
 
@@ -163,7 +199,8 @@ class BookAddFragment: Fragment() {
                         for(i in responseList.indices)
                         {
                             item[i] = responseList[i].surname + " " + responseList[i].name
-                            var number = responseList[i].id
+                            var id = responseList[i].id
+                            _idsAuthor.add(id)
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputAuthor?.adapter = arrayAdapter
@@ -196,6 +233,8 @@ class BookAddFragment: Fragment() {
                         for(i in responseList.indices)
                         {
                             item[i] = responseList[i].title
+                            var id = responseList[i].id
+                            _idsGenre.add(id)
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputGenre?.adapter = arrayAdapter
@@ -228,6 +267,8 @@ class BookAddFragment: Fragment() {
                         for(i in responseList.indices)
                         {
                             item[i] = responseList[i].name
+                            var id = responseList[i].id
+                            _idsSeries.add(id)
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputSeries?.adapter = arrayAdapter
@@ -259,6 +300,8 @@ class BookAddFragment: Fragment() {
                         for(i in responseList.indices)
                         {
                             item[i] = responseList[i].name
+                            var id = responseList[i].id
+                            _idsCoverType.add(id)
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputCoverType?.adapter = arrayAdapter
@@ -291,6 +334,8 @@ class BookAddFragment: Fragment() {
                         for(i in responseList.indices)
                         {
                             item[i] = responseList[i].name
+                            var id = responseList[i].id
+                            _idsPublHouse.add(id)
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputPublHouse?.adapter = arrayAdapter

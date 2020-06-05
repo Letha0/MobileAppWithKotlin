@@ -30,6 +30,11 @@ data class Book (
     val updatedAt: Date,
    // val photos: String
     val opinions: List<Opinion>,
-    val author: Author
+    val author: Author,
+    val genre: Genre,
+    val serie: Serie,
+    val covertype: CoverType,
+    @SerializedName("publ_house")
+    val publHouse: PublishingHouse
 
 )

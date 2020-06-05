@@ -1,6 +1,5 @@
 package book.store.api
 
-import UserRequest
 import book.store.api.*
 import book.store.models.*
 import book.store.requests.*
@@ -85,7 +84,8 @@ interface Api {
     @PATCH("api/author/{id}")
     fun editAuthor(
         @Header("Authorization")  token: String,
-        @Path("id") id: Int
+        @Path("id") id: Int,
+        @Body add:AuthorRequest
     ) : retrofit2.Call<Author>
 
     @POST("/api/authors")
@@ -100,24 +100,161 @@ interface Api {
         @Path("id") id: Int
     ): retrofit2.Call<Author>
 
+    @GET("api/series")
+    fun getAllSeries(
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<Serie>>
+
+    @POST("/api/books/{author}/{genre}/{series}/{covertype}/{publHouse}")
+    fun addBook(
+        @Header("Authorization") token: String,
+        @Body add: AddBookRequest,
+        @Path("author") author: Int,
+        @Path("genre") genre: Int,
+        @Path("series") series: Int,
+        @Path("covertype") covertype: Int,
+        @Path("publHouse") publHouse: Int
+    ): retrofit2.Call<AddBookResponse>
+
+    @DELETE("api/books/{id}")
+    fun deleteBook(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<Book>
+
+    @GET("api/opinion")
+    fun getAllOpinions(
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<Opinion>>
+
+    @DELETE("api/opinion/{id}")
+    fun deleteOpinion(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<String>
+
+    @DELETE("api/genres/{id}")
+    fun deleteGenre(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<String>
+
+    @PATCH("api/genres/{id}")
+    fun editGenre(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int,
+        @Body add:NewGenreRequest
+    ) : retrofit2.Call<Genre>
+
+    @POST("/api/genres")
+    fun addGenre(
+        @Header("Authorization")  token: String,
+        @Body add: NewGenreRequest
+    ): retrofit2.Call<Genre>
+
+    @GET("api/paymethod")
+    fun getAllPayments(
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<Payment>>
+
+    @DELETE("api/paymethod/{id}")
+    fun deletePayment(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<String>
+
+    @POST("/api/paymethod")
+    fun addPayment(
+        @Header("Authorization")  token: String,
+        @Body add: PaymentRequest
+    ): retrofit2.Call<SuccessResponse>
+
+    @PATCH("api/paymethod/{id}")
+    fun editPayment(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int,
+        @Body add:PaymentRequest
+    ) : retrofit2.Call<Payment>
+
+    @GET("api/publhouse")
+    fun getAllPublHouses(
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<PublishingHouse>>
+
+    @DELETE("api/publhouse/{id}")
+    fun deletePublHouse(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<String>
+
+    @POST("/api/publhouse")
+    fun addPublHouse(
+        @Header("Authorization")  token: String,
+        @Body add: PublHouseRequest
+    ): retrofit2.Call<SuccessResponse>
+
+    @PATCH("api/publhouse/{id}")
+    fun editPublHouse(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int,
+        @Body add:PublHouseRequest
+    ) : retrofit2.Call<PublishingHouse>
+
     @GET("api/genres")
     fun getAllGenres(
         @Header("Authorization")  token: String
     ): retrofit2.Call<List<Genre>>
 
-    @GET("api/series")
-    fun getAllSeries(
-        @Header("Authorization")  token: String
-    ): retrofit2.Call<List<Serie>>
+    @DELETE("api/series/{id}")
+    fun deleteSerie(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<SuccessResponse>
+
+    @POST("/api/series/{author}/{publHouse}")
+    fun addSerie(
+        @Header("Authorization")  token: String,
+        @Body add: SerieRequest,
+        @Path("author") author:Int,
+        @Path("publHouse") publHouse:Int
+    ): retrofit2.Call<Serie>
+
+    @PATCH("api/series/{id}")
+    fun editSerie(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int,
+        @Body add:EditSerieRequest
+    ) : retrofit2.Call<Serie>
 
     @GET("api/covertype")
     fun getAllCoverTypes(
         @Header("Authorization")  token: String
     ): retrofit2.Call<List<CoverType>>
 
-    @GET("api/publhouse")
-    fun getAllPublHouses(
+    @DELETE("api/covertype/{id}")
+    fun deleteCoverType(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<StringResponse>
+
+    @POST("/api/covertype")
+    fun addCoverType(
+        @Header("Authorization")  token: String,
+        @Body add: CoverTypeRequest
+    ): retrofit2.Call<CoverType>
+
+    @PATCH("api/covertype/{id}")
+    fun editCoverType(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int,
+        @Body add:CoverTypeRequest
+    ) : retrofit2.Call<CoverType>
+
+    @GET("api/orders")
+    fun getAllOrders(
         @Header("Authorization")  token: String
-    ): retrofit2.Call<List<PublishingHouse>>
+    ): retrofit2.Call<List<Order>>
+
+
 }
 

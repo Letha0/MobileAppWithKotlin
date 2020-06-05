@@ -65,7 +65,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/opinions"
-                    android:text="opinion"/>
+                    android:text="opinion"
+                    android:onClick="btnOpinions"/>
             </LinearLayout>
 
             <LinearLayout
@@ -79,7 +80,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/genres"
-                    android:text="Genres"/>
+                    android:text="Genres"
+                    android:onClick="btnGenres"/>
 
                 <Button
                     android:id="@+id/btn_orders"
@@ -87,7 +89,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/orders"
-                    android:text="Orders"/>
+                    android:text="Orders"
+                    android:onClick="btnOrders"/>
 
                 <Button
                     android:id="@+id/btn_payments"
@@ -95,7 +98,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/payments"
-                    android:text="Payments"/>
+                    android:text="Payments"
+                    android:onClick="btnPayments"/>
             </LinearLayout>
 
             <LinearLayout
@@ -110,7 +114,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/publhouse"
-                    android:text="Publishing Houses" />
+                    android:text="Publishing Houses"
+                    android:onClick="btnPublHouse"/>
 
                 <Button
                     android:id="@+id/btn_series"
@@ -118,7 +123,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/series"
-                    android:text="Series" />
+                    android:text="Series"
+                    android:onClick="btnSeries"/>
 
                 <Button
                     android:id="@+id/btn_covertypes"
@@ -126,7 +132,8 @@
                     android:layout_height="130dp"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/covertypes"
-                    android:text="Cover Types" />
+                    android:text="Cover Types"
+                    android:onClick="btnCoverType"/>
             </LinearLayout>
 
             <LinearLayout

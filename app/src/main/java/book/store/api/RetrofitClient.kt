@@ -1,12 +1,10 @@
 package book.store.api
 
-import android.webkit.CookieManager
-import okhttp3.JavaNetCookieJar
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.CookieHandler
 
 
 object RetrofitClient {
@@ -34,11 +32,15 @@ object RetrofitClient {
             }.build()
 
 
+        var gson = GsonBuilder()
+            .setLenient()
+            .create()
+
 
         val instance: Api by lazy{
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttp.build())
                 .build()
 

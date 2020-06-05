@@ -43,12 +43,37 @@ RecyclerView.Adapter<AuthorAdapter.ViewHolder>() {
         var fragmentManager =
             (view.context as FragmentActivity).supportFragmentManager //to handle context
 
+        var seeBtn = view.findViewById<Button>(R.id.btn_see)
         var editBtn = view.findViewById<Button>(R.id.btn_edit)
         var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
 
         fun bindAuthor(author:Author){
 
             session = SessionManager(context)
+
+            seeBtn.setOnClickListener{
+
+                                val dialogBuilder = AlertDialog.Builder(context)
+                with(dialogBuilder)
+                {
+                    setTitle("Author details")
+                    setMessage("Name: " + author.name + System.lineSeparator() +
+                            "Surname: " +author.surname + System.lineSeparator() +
+                            "Date of birth: " + author.dateOfBirth+ System.lineSeparator() +
+                            "Date of death: " + author.dateOfDeath+ System.lineSeparator() +
+                            "Description: " + author.description)
+                }
+                                                .setCancelable(false)
+                                                .setPositiveButton("Ok"){dialog, id ->
+                                                    dialog.dismiss()
+                                }
+                val alert = dialogBuilder.create()
+                alert.show()
+
+
+
+            }
+
             editBtn.setOnClickListener{
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.myFragment, AuthorEditFragment())

@@ -1,6 +1,5 @@
 package book.store.ui.book
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import book.store.AddBookAdapter
-import book.store.AuthorAdapter
+import book.store.CrudBookAdapter
 
 import book.store.R
 import book.store.SessionManager
 import book.store.api.RetrofitClient
-import book.store.models.Author
 import book.store.models.Book
-import book.store.ui.author.AuthorAddFragment
 import kotlinx.android.synthetic.main.fragment_book.*
 import retrofit2.Call
 import retrofit2.Response
@@ -25,7 +21,7 @@ class BookFragment : Fragment() {
 
     private var books = listOf<Book>()
     lateinit var session: SessionManager
-    private lateinit var addBookAdapter: AddBookAdapter
+    private lateinit var addBookAdapter: CrudBookAdapter
 
     private lateinit var viewModel: BookViewModel
 
@@ -70,7 +66,7 @@ class BookFragment : Fragment() {
                     if(response.code()==200){
                         refreshLayout.isRefreshing = false
                         books = response.body()!!
-                        addBookAdapter = AddBookAdapter(requireContext(), books)
+                        addBookAdapter = CrudBookAdapter(requireContext(), books)
 
                         book_recyclerview.adapter = addBookAdapter
                         addBookAdapter.notifyDataSetChanged()

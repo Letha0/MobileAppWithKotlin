@@ -26,8 +26,17 @@
             android:layout_marginTop="5dp">
 
             <Button
+                android:id="@+id/btn_see"
+                android:layout_width="70dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/eye_30"
+                android:text="See"
+                android:textSize="12sp"/>
+
+            <Button
                 android:id="@+id/btn_edit"
-                android:layout_width="0dip"
+                android:layout_width="70dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/edit_30"
@@ -35,7 +44,7 @@
 
             <Button
                 android:id="@+id/btn_delete"
-                android:layout_width="0dip"
+                android:layout_width="73dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/delete_30"

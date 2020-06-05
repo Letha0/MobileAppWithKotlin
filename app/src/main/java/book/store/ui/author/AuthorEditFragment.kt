@@ -10,6 +10,7 @@ import book.store.R
 import book.store.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Author
+import book.store.requests.AuthorRequest
 import kotlinx.android.synthetic.main.fragment_author_crud.*
 import retrofit2.Call
 import retrofit2.Response
@@ -65,7 +66,7 @@ class AuthorEditFragment : Fragment() {
             return@setOnClickListener
         }
 
-        RetrofitClient.instance.editAuthor(session.TOKEN, session.ID)
+        RetrofitClient.instance.editAuthor(session.TOKEN, session.ID, AuthorRequest(name,surname,dateBirth,dateDeath,description))
             .enqueue(object: retrofit2.Callback<Author>{
                 override fun onFailure(call: Call<Author>, t: Throwable) {
                     Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()

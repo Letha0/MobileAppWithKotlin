@@ -95,22 +95,50 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         get(){
             return pref.getInt("authorId", 0)
         }
+
+    val authorIdToEdit : Int
+        get(){
+            return pref.getInt("authorIdToEdit", 0)
+        }
+
+    val genreIdToEdit : Int
+        get(){
+            return pref.getInt("genreIdToEdit", 0)
+        }
+
     val genreId : Int
         get(){
             return pref.getInt("genreId", 0)
         }
+
     val seriesId : Int
         get(){
             return pref.getInt("seriesId", 0)
+        }
+
+    val seriesIdToEdit : Int
+        get(){
+            return pref.getInt("seriesIdToEdit", 0)
         }
 
     val coverTypeId : Int
         get(){
             return pref.getInt("coverTypeId", 0)
         }
+
+    val coverTypeIdToEdit : Int
+        get(){
+            return pref.getInt("coverTypeIdToEdit", 0)
+        }
+
     val publishingHouseId : Int
         get(){
             return pref.getInt("publishingHouseId", 0)
+        }
+
+    val publishingHouseIdToEdit : Int
+        get(){
+            return pref.getInt("publishingHouseIdToEdit", 0)
         }
 
     val release : String?
@@ -202,15 +230,55 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         editor.putBoolean(IS_LOGIN, true)
         editor.putInt("ID", id)
         editor.putString("title",title)
-        editor.putInt("authorId",authorId)
-        editor.putInt("genreId",genreId)
+        editor.putInt("authorIdToEdit",authorId)
+        editor.putInt("genreIdToEdit",genreId)
         editor.putString("description",description)
-        editor.putInt("seriesId",seriesId)
+        editor.putInt("seriesIdToEdit",seriesId)
         editor.putString("release",release)
-        editor.putInt("coverTypeId",coverTypeId)
-        editor.putInt("publishingHouseId",publishingHouseId)
+        editor.putInt("coverTypeIdToEdit",coverTypeId)
+        editor.putInt("publishingHouseIdToEdit",publishingHouseId)
         editor.putFloat("price",price)
         editor.putString("coverImage",coverImage)
+        editor.commit()
+    }
+
+    fun getDataToEditGenre(id:Int, title:String){
+        editor.putBoolean(IS_LOGIN, true)
+        editor.putInt("ID", id)
+        editor.putString("title",title)
+        editor.commit()
+    }
+
+    fun getDataToEditPayment(id:Int, name:String, description: String){
+        editor.putBoolean(IS_LOGIN, true)
+        editor.putInt("ID", id)
+        editor.putString("name",name)
+        editor.putString("description",description)
+        editor.commit()
+    }
+
+    fun getDataToEditPublHouse(id:Int, name:String, description: String){
+        editor.putBoolean(IS_LOGIN, true)
+        editor.putInt("ID", id)
+        editor.putString("name",name)
+        editor.putString("description",description)
+        editor.commit()
+    }
+
+    fun getDataToEditSerie(id:Int, name:String, description: String, authorId: Int, publishingHouseId: Int){
+        editor.putBoolean(IS_LOGIN, true)
+        editor.putInt("ID", id)
+        editor.putString("name",name)
+        editor.putString("description",description)
+        editor.putInt("authorIdToEdit",authorId)
+        editor.putInt("publishingHouseIdToEdit",publishingHouseId)
+        editor.commit()
+    }
+
+    fun getDataToEditCoverType(id:Int, name:String){
+        editor.putBoolean(IS_LOGIN, true)
+        editor.putInt("ID", id)
+        editor.putString("name",name)
         editor.commit()
     }
 
