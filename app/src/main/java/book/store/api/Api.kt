@@ -294,16 +294,16 @@ interface Api {
         @Header("Authorization")  token: String
     ): retrofit2.Call<SuccessResponse>
 
-    @POST("/api/orders")
+    @POST("/api/orders/{id}")
     fun addOrder(
         @Header("Cookie") cookie: String?,
         @Header("Authorization")  token: String,
+        @Path("id") id: Int,
         @Body add:OrderRequest
     ): retrofit2.Call<SuccessResponse>
 
-    @GET("api/order/see/{id}")
+    @GET("api/order/get")
     fun getUserOrders(
-        @Path("id") id:Int,
         @Header("Authorization")  token: String
     ): retrofit2.Call<List<Order>>
 

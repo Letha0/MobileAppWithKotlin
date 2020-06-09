@@ -118,7 +118,7 @@ class CartFragment : Fragment() {
                         cartAdapter = CartAdapter((requireContext()), product)
 
 
-                        price.text = response.body()!!.totalPrice.toString()
+                        price.text = response.body()!!.totalPrice.toString() + "$"
                         cart_recyclerview.adapter = cartAdapter
                         cartAdapter.notifyDataSetChanged()
 

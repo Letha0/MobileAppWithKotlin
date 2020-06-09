@@ -43,7 +43,7 @@ class SeeOrdersFragment : Fragment() {
     private fun fetchOrders(){
         session = SessionManager(requireContext())
 
-        RetrofitClient.instance.getUserOrders(session.userID, session.TOKEN)
+        RetrofitClient.instance.getUserOrders(session.TOKEN)
             .enqueue(object : retrofit2.Callback<List<Order>>{
                 override fun onFailure(call: Call<List<Order>>, t: Throwable) {
                     Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()

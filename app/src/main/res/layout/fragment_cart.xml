@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             app:titleTextColor="@color/colorAccent"
-            app:title="Cart"
+            app:title="Total price:"
             android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">

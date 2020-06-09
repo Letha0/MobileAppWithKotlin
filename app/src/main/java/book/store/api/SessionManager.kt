@@ -389,6 +389,17 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         editor.commit()
     }
 
+    val payMehtId : Int
+        get(){
+            return pref.getInt("payMehtId", 0)
+        }
+
+    fun getPayMethId(payMehtId:Int){
+        editor.putBoolean(IS_LOGIN, true)
+        editor.putInt("payMehtId", payMehtId)
+        editor.commit()
+    }
+
 
 
     fun Logout()
