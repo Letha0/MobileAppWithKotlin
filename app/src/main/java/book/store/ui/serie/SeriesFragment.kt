@@ -1,6 +1,5 @@
 package book.store.ui.serie
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,18 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import book.store.AuthorAdapter
 
 import book.store.R
 import book.store.SeriesAdapter
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
-import book.store.models.Author
 import book.store.models.Serie
-import book.store.ui.author.AuthorAddFragment
-import book.store.ui.author.AuthorViewModel
-import kotlinx.android.synthetic.main.fragment_author.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.refreshLayout
 import kotlinx.android.synthetic.main.fragment_series.*
 import kotlinx.android.synthetic.main.fragment_series.add_author
@@ -32,7 +25,6 @@ class SeriesFragment : Fragment() {
     lateinit var session: SessionManager
     private lateinit var serieAdapter: SeriesAdapter
 
-    private lateinit var viewModel: AuthorViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

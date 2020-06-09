@@ -1,32 +1,18 @@
 package book.store.ui.user
 
-import android.content.Intent
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import book.store.BookAdapter
 
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.UsersAdapter
-import book.store.activities.MainActivity
 import book.store.api.RetrofitClient
-import book.store.api.UserResponse
-import book.store.models.Book
 import book.store.models.User
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.fragment_user.*
-import org.json.JSONArray
-import org.json.JSONObject
-import org.json.JSONTokener
 import retrofit2.Call
 import retrofit2.Response
 
@@ -36,13 +22,6 @@ class UsersFragment : Fragment() {
     private var users = listOf<User>()
     private lateinit var userAdapter: UsersAdapter
 
-
-
-    companion object {
-        fun newInstance() = UsersFragment()
-    }
-
-    private lateinit var viewModel: UsersViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,7 +74,7 @@ class UsersFragment : Fragment() {
 
                 override fun onFailure(call: Call<List<User>>, t: Throwable) {
 
-                    Toast.makeText(requireContext(), "You have been logged out", Toast.LENGTH_SHORT).show()
+                    session.Logout()
 
                 }
 

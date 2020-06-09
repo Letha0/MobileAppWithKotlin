@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import book.store.CoverTypeAdapter
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.CoverType
 import kotlinx.android.synthetic.main.fragment_cover_type.*
@@ -68,11 +68,9 @@ class CoverTypeFragment : Fragment() {
                         cover_type_recyclerview.adapter = coverTypeAdapter
                         coverTypeAdapter.notifyDataSetChanged()}
 
-
                     }
 
                 })
-
         }
     }
 

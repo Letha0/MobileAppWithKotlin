@@ -7,9 +7,11 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="413dp"
+        android:layout_width="0dp"
         android:layout_height="412dp"
-        app:srcCompat="@mipmap/logo_oranges_foreground"
-        tools:layout_editor_absoluteX="-1dp"
-        tools:layout_editor_absoluteY="181dp" />
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/logo_oranges_foreground" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,5 +8,6 @@ data class Order (
     val userId:Int,
     val address: String,
     val city: String,
-    val totalPrice: Float
+    val totalPrice: Float,
+    val user:User
 )

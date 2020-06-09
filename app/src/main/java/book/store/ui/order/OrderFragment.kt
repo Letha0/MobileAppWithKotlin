@@ -1,6 +1,5 @@
 package book.store.ui.order
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,12 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import book.store.OrderAdapter
 
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Order
-import kotlinx.android.synthetic.main.fragment_author.*
 import kotlinx.android.synthetic.main.fragment_author.refreshLayout
-import kotlinx.android.synthetic.main.fragment_cover_type.*
 import kotlinx.android.synthetic.main.fragment_order.*
 import retrofit2.Call
 import retrofit2.Response
@@ -47,7 +44,7 @@ class OrderFragment : Fragment() {
     private fun fetchOrders(){
         session = SessionManager(requireContext())
 
-        RetrofitClient.instance.getAllOrders(session.TOKEN)
+        RetrofitClient.instance.getAllOrders(session.cookie, session.TOKEN)
             .enqueue(object : retrofit2.Callback<List<Order>>{
                 override fun onFailure(call: Call<List<Order>>, t: Throwable) {
                     Toast.makeText(requireContext(), t.message, Toast.LENGTH_SHORT).show()
@@ -64,10 +61,8 @@ class OrderFragment : Fragment() {
 
                         orders_recyclerview.adapter = orderAdapter
                         orderAdapter.notifyDataSetChanged()
-
                     }
                 }
-
             })
     }
 

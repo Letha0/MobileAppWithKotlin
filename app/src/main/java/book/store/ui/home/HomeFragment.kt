@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import book.store.BookAdapter
 import book.store.R
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Book
+import book.store.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Response
@@ -23,51 +24,27 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
 
 
-    private lateinit var homeViewModel: HomeViewModel
-
     private var isFirstBackPressed = false
+
+    lateinit var session: SessionManager
 
     private var books = listOf<Book>()
     private lateinit var apiService: RetrofitClient
     private lateinit var bookAdapter: BookAdapter
 
-   /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true /* enabled by default */) {
-                override fun handleOnBackPressed() {
-                    if(isFirstBackPressed){
-                        finish()
-                    } else {
-                        isFirstBackPressed = true
-                        Toast.makeText(applicationContext, "Press back again to exit", Toast.LENGTH_SHORT).show()
-                        Handler().postDelayed({
-                            isFirstBackPressed = false
-
-                        }, 3000)
-                    }
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }*/
-   open fun onBackPressed() = true
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-       //val textView: TextView = root.findViewById(R.id.text_home)
-      // homeViewModel.text.observe(viewLifecycleOwner, Observer {
-       //    textView.text = it
-       // })
         return root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        session = SessionManager(requireContext())
+
 
         refreshLayout.setOnRefreshListener {
             fetchBooks()
@@ -94,6 +71,29 @@ class HomeFragment : Fragment() {
                 }
 
             })
+
+        btn_search.setOnClickListener{
+
+            val title = search.text.toString().trim()
+
+            if(title.isEmpty()) {
+                search.error = "Input title"
+                search.requestFocus()
+                return@setOnClickListener
+            }
+
+            session.searchTitle(title)
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+
+            fragmentTransaction?.replace(R.id.nav_host_fragment, SearchFragment())
+
+            fragmentTransaction?.addToBackStack(null)
+            fragmentTransaction?.commit()
+
+
+
+        }
+
     }
 
 
@@ -112,13 +112,15 @@ class HomeFragment : Fragment() {
 
                 override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
 
-                    refreshLayout.isRefreshing = false
+                    if(refreshLayout==null) Toast.makeText(activity, "Try again", Toast.LENGTH_SHORT).show()
+                        else
+                    {refreshLayout.isRefreshing = false
                     books = response.body()!!
 
                     bookAdapter = BookAdapter(requireContext(), books)
 
                     books_recyclerview.adapter = bookAdapter
-                    bookAdapter.notifyDataSetChanged()
+                    bookAdapter.notifyDataSetChanged()}
                 }
 
             })

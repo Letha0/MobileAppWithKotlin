@@ -4,10 +4,10 @@ import book.store.api.*
 import book.store.models.*
 import book.store.requests.*
 import retrofit2.http.*
+import java.util.*
 
 interface Api {
 
-    //@FormUrlEncoded
     @POST("api/auth/register")
     fun register(
         @Body registration: RegisterRequest
@@ -70,6 +70,12 @@ interface Api {
         @Path("id") id: Int
     ): retrofit2.Call<User>
 
+    @PATCH("api/user/{id}")
+    fun updateUser(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int
+    ): retrofit2.Call<SuccessResponse>
+
     @GET("/api/authors")
     fun getAllAuthors(
         @Header("Authorization")  token: String
@@ -79,7 +85,7 @@ interface Api {
     fun deleteAuthor(
         @Header("Authorization")  token: String,
         @Path("id") id: Int
-    ): retrofit2.Call<Author>
+    ): retrofit2.Call<String>
 
     @PATCH("api/author/{id}")
     fun editAuthor(
@@ -115,6 +121,19 @@ interface Api {
         @Path("covertype") covertype: Int,
         @Path("publHouse") publHouse: Int
     ): retrofit2.Call<AddBookResponse>
+
+    @PATCH("/api/books/{book}/{author}/{genre}/{series}/{covertype}/{publHouse}")
+    fun editBook(
+        @Header("Authorization") token: String,
+        @Body add: AddBookRequest,
+        @Path("book") book:Int,
+        @Path("author") author: Int,
+        @Path("genre") genre: Int,
+        @Path("series") series: Int,
+        @Path("covertype") covertype: Int,
+        @Path("publHouse") publHouse: Int
+    ): retrofit2.Call<Book>
+
 
     @DELETE("api/books/{id}")
     fun deleteBook(
@@ -161,7 +180,7 @@ interface Api {
     fun deletePayment(
         @Header("Authorization")  token: String,
         @Path("id") id: Int
-    ): retrofit2.Call<String>
+    ): retrofit2.Call<SuccessResponse>
 
     @POST("/api/paymethod")
     fun addPayment(
@@ -235,7 +254,7 @@ interface Api {
     fun deleteCoverType(
         @Header("Authorization")  token: String,
         @Path("id") id: Int
-    ): retrofit2.Call<StringResponse>
+    ): retrofit2.Call<String>
 
     @POST("/api/covertype")
     fun addCoverType(
@@ -252,9 +271,63 @@ interface Api {
 
     @GET("api/orders")
     fun getAllOrders(
+        @Header("Cookie") cookie: String?,
         @Header("Authorization")  token: String
     ): retrofit2.Call<List<Order>>
 
+    @GET("api/cart/mobile")
+    fun getCart(
+        @Header("Cookie") cookie: String?,
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<Cart<List<Products>>>
 
+    @POST("/api/cart/{book}")
+    fun addToCart(
+        @Header("Cookie") cookie: String?,
+        @Header("Authorization")  token: String,
+        @Path("book") book: Int
+    ): retrofit2.Call<SuccessResponse>
+
+    @DELETE("api/cart")
+    fun deleteCart(
+        @Header("Cookie") cookie: String?,
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<SuccessResponse>
+
+    @POST("/api/orders")
+    fun addOrder(
+        @Header("Cookie") cookie: String?,
+        @Header("Authorization")  token: String,
+        @Body add:OrderRequest
+    ): retrofit2.Call<SuccessResponse>
+
+    @GET("api/order/see/{id}")
+    fun getUserOrders(
+        @Path("id") id:Int,
+        @Header("Authorization")  token: String
+    ): retrofit2.Call<List<Order>>
+
+    @POST("/api/search")
+    fun search(
+        @Body add:SearchRequest
+    ): retrofit2.Call<List<Book>>
+
+    @GET("api/opinions/{id}")
+    fun getOpinionsAboutBook(
+        @Path("id") id:Int
+    ): retrofit2.Call<List<Opinion>>
+
+    @POST("api/opinion/{id}")
+    fun addOpinion(
+        @Path("id") id:Int,
+        @Body add:OpinionRequest
+    ): retrofit2.Call<Opinion>
+
+    @PATCH("api/auth/me/{id}")
+    fun updateSelfAcc(
+        @Header("Authorization")  token: String,
+        @Path("id") id: Int,
+        @Body add:AccUpdateRequest
+    ): retrofit2.Call<SuccessResponse>
 }
 

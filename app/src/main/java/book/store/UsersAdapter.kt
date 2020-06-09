@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import book.store.api.RetrofitClient
+import book.store.api.SessionManager
 import book.store.models.User
 import book.store.ui.user.UserEditFragment
 import kotlinx.android.synthetic.main.row_item.view.*
@@ -26,9 +27,17 @@ class UsersAdapter(var context: Context, var users: List<User> = arrayListOf()) 
         return ViewHolder(view)
 }
 
+    val num:Int = 1
+
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.bindUser(users[position])
     }
+
+    override fun getItemCount(): Int = users.size
+
+      //  if(num*10>users.size)return users.size
+       // else return num*10
+
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -40,16 +49,40 @@ class UsersAdapter(var context: Context, var users: List<User> = arrayListOf()) 
         var fragmentManager =
             (view.context as FragmentActivity).supportFragmentManager //to handle context
 
+        var seeBtn = view.findViewById<Button>(R.id.btn_see)
         var editBtn = view.findViewById<Button>(R.id.btn_edit)
         var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
+
         fun bindUser(user: User) {
                         session = SessionManager(context)
+
+            seeBtn.setOnClickListener{
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                with(dialogBuilder)
+                {
+                    setTitle("User details")
+                    setMessage("Name: " + user.name + System.lineSeparator() +
+                            "Surname: " +user.surname + System.lineSeparator() +
+                            "Email: " + user.email + System.lineSeparator())
+                }
+                    .setCancelable(false)
+                    .setPositiveButton("Ok"){dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = dialogBuilder.create()
+                alert.show()
+
+
+
+            }
+
                         editBtn.setOnClickListener{         //go to edit layout
                             val fragmentTransaction = fragmentManager.beginTransaction()
                             fragmentTransaction.replace(R.id.myFragment,UserEditFragment()                            )
                             fragmentTransaction.addToBackStack(null)
                             fragmentTransaction.commit()
-                            session.getDataToEditUser(user.name, user.surname, user.email)
+                            session.getDataToEditUser(user.id, user.name, user.surname, user.email)
                         }
 
                         deleteBtn.setOnClickListener{               //see delete alert and confir or dismiss
@@ -89,7 +122,7 @@ class UsersAdapter(var context: Context, var users: List<User> = arrayListOf()) 
         itemView.main_info.text = user.email       //put user email on list
      } }
 
-    override fun getItemCount(): Int = users.size
+
 
 
 

@@ -1,5 +1,6 @@
 package book.store
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import book.store.api.SessionManager
 import book.store.models.Order
 import kotlinx.android.synthetic.main.order_row_item.view.*
 
@@ -28,7 +30,8 @@ class OrderAdapter (var context: Context, var orders:List<Order> = arrayListOf()
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
         lateinit var session: SessionManager
-        var editBtn = view.findViewById<Button>(R.id.btn_edit)
+
+        var seeBtn = view.findViewById<Button>(R.id.btn_see)
         var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
         var context: Context = itemView.context
 
@@ -37,6 +40,28 @@ class OrderAdapter (var context: Context, var orders:List<Order> = arrayListOf()
 
 
         fun bindOrders(order: Order) {
+
+            seeBtn.setOnClickListener{
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                with(dialogBuilder)
+                {
+                    setTitle("Order details")
+                    setMessage("User: " + order.user.name + " " + order.user.surname + System.lineSeparator() +
+                            "Address: " + order.address + System.lineSeparator() +
+                            "City: " + order.city + System.lineSeparator() +
+                            "Total price: " + order.totalPrice + System.lineSeparator())
+                }
+                    .setCancelable(false)
+                    .setPositiveButton("Ok"){dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = dialogBuilder.create()
+                alert.show()
+
+
+
+            }
 
             itemView.main_info.text = "Order nr " + order.id.toString()
 

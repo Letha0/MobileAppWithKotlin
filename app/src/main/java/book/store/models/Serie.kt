@@ -10,7 +10,7 @@ data class Serie(
     val authorId:Int,
     @SerializedName("publishing_house_id")
     val publHouseID: Int,
-    val author: Author,
-    val publHouse: PublishingHouse
+    val author: Author?,
+    val publHouse: PublishingHouse?
 
 )

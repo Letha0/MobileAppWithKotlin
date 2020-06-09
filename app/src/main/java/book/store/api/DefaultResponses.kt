@@ -3,6 +3,7 @@ package book.store.api
 import android.text.format.DateFormat
 import book.store.models.Book
 import book.store.models.CoverType
+import book.store.models.Order
 import book.store.models.User
 import com.google.gson.annotations.SerializedName
 import java.io.ObjectOutput
@@ -25,7 +26,6 @@ data class EnterNewPasswordResponse( val id: Int,
                                      val updatedAt: String
 )
 
-data class BookResponse (val Books: List<Book>)
 
 data class UserResponse (val id:Int,
                          val name:String,
@@ -43,7 +43,8 @@ data class UserResponse (val id:Int,
                          val createdAt: String,
                          @SerializedName("updated_at")
                          val updatedAt: String,
-                         val error: String
+                         val error: String,
+                         val order: Order
 )
 
 data class AddUserResponse(
@@ -80,5 +81,3 @@ data class AddBookResponse(
 )
 
 data class SuccessResponse(val status: String)
-
-data class StringResponse (val code: String = "Cover Type has been deleted")

@@ -47,12 +47,9 @@ class EnterResetPasswordTokenActivity : AppCompatActivity() {
                             intent.putExtra("token", token)
                             startActivity(intent)
                         }
-                        //if (response.code() == 404)
-                        // Toast.makeText(applicationContext, "Token is invalid", Toast.LENGTH_LONG).show()
                         else
                          Toast.makeText(applicationContext, response.code().toString(), Toast.LENGTH_LONG).show()
 
-                       // response.code()
                     }
 
                 })

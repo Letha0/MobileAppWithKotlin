@@ -1,6 +1,5 @@
 package book.store.ui.genre
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,13 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import book.store.GenreAdapter
 
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Genre
-import book.store.ui.author.AuthorAddFragment
-import kotlinx.android.synthetic.main.fragment_author.*
 import kotlinx.android.synthetic.main.fragment_genre.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.refreshLayout
 import retrofit2.Call
 import retrofit2.Response
@@ -28,7 +24,6 @@ class GenreFragment : Fragment() {
     lateinit var session: SessionManager
     private lateinit var genreAdapter: GenreAdapter
 
-    private lateinit var viewModel: GenreViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

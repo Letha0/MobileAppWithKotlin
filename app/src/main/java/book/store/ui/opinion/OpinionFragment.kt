@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Opinion
 import book.store.OpinionAdapter
@@ -24,7 +24,6 @@ class OpinionFragment : Fragment() {
     lateinit var session: SessionManager
     private lateinit var opinionAdapter: OpinionAdapter
 
-    private lateinit var viewModel: OpinionViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

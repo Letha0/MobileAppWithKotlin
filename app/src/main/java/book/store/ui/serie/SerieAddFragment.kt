@@ -10,9 +10,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
-import book.store.api.SuccessResponse
 import book.store.models.Author
 import book.store.models.PublishingHouse
 import book.store.models.Serie
@@ -42,6 +41,8 @@ class SerieAddFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         session = SessionManager(requireContext())
+
+        name.text ="Add serie"
 
         inputAuthor = getView()?.findViewById(R.id.input_author) as Spinner
         fetchAuthors()
@@ -82,6 +83,24 @@ class SerieAddFragment: Fragment() {
             input_author.setSelection(authorPosition)
             val publishingHouseId = session.publishingHouseId
             input_publHouse.setSelection(publHousePosition)
+
+            if(name.isEmpty()){
+                input_name.error = "Name required"
+                input_name.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(description.isEmpty()){
+                input_description.error = "Name required"
+                input_description.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(description.length < 20) {
+                input_description.error = "Description have to have 20 characters minimum!"
+                input_description.requestFocus()
+                return@setOnClickListener
+            }
 
             RetrofitClient.instance.addSerie(session.TOKEN, SerieRequest(name, description), authorId, publishingHouseId)
                 .enqueue(object : retrofit2.Callback<Serie>{
@@ -131,12 +150,9 @@ class SerieAddFragment: Fragment() {
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputAuthor?.adapter = arrayAdapter
 
-
                     }
 
-
                 }
-
             })
 
     }
@@ -164,12 +180,8 @@ class SerieAddFragment: Fragment() {
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputPublHouse?.adapter = arrayAdapter
 
-
                     }
-
-
                 }
-
             })
 
     }

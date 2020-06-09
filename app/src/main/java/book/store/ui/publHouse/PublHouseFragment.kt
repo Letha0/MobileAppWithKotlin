@@ -1,6 +1,5 @@
 package book.store.ui.publHouse
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,18 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import book.store.PaymentsAdapter
 import book.store.PublHouseAdapter
 
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
-import book.store.models.Payment
 import book.store.models.PublishingHouse
-import book.store.ui.payment.PaymentAddFragment
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.refreshLayout
-import kotlinx.android.synthetic.main.fragment_payment.*
 import kotlinx.android.synthetic.main.fragment_publ_house.*
 import kotlinx.android.synthetic.main.fragment_publ_house.add
 import retrofit2.Call

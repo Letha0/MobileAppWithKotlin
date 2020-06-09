@@ -11,8 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import book.store.api.RetrofitClient
+import book.store.api.SessionManager
+import book.store.api.SuccessResponse
 import book.store.models.Payment
-import book.store.ui.genre.GenreEditFragment
 import book.store.ui.payment.PaymentEditFragment
 import kotlinx.android.synthetic.main.row_item.view.*
 import retrofit2.Call
@@ -34,6 +35,8 @@ class PaymentsAdapter (var context: Context, var payments:List<Payment> = arrayL
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
 
         lateinit var session: SessionManager
+
+        var seeBtn = view.findViewById<Button>(R.id.btn_see)
         var editBtn = view.findViewById<Button>(R.id.btn_edit)
         var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
         var context: Context = itemView.context
@@ -44,6 +47,27 @@ class PaymentsAdapter (var context: Context, var payments:List<Payment> = arrayL
         fun bindPayment(payment:Payment){
 
             session = SessionManager(context)
+
+            seeBtn.setOnClickListener{
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                with(dialogBuilder)
+                {
+                    setTitle("Payment details")
+                    setMessage("Name: " + payment.name + System.lineSeparator() +
+                            "Description: " + payment.description)
+                }
+                    .setCancelable(false)
+                    .setPositiveButton("Ok"){dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = dialogBuilder.create()
+                alert.show()
+
+
+
+            }
+
             editBtn.setOnClickListener {
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.myFragment, PaymentEditFragment())
@@ -59,13 +83,13 @@ class PaymentsAdapter (var context: Context, var payments:List<Payment> = arrayL
                     .setCancelable(false)
                     .setPositiveButton("Delete") { dialog, id ->
                         RetrofitClient.instance.deletePayment(session.TOKEN, payment.id)
-                            .enqueue(object : retrofit2.Callback<String>{
-                                override fun onFailure(call: Call<String>, t: Throwable) {
+                            .enqueue(object : retrofit2.Callback<SuccessResponse>{
+                                override fun onFailure(call: Call<SuccessResponse>, t: Throwable) {
                                     Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
                                     dialog.dismiss()
                                 }
 
-                                override fun onResponse(call: Call<String>, response: Response<String>) {
+                                override fun onResponse(call: Call<SuccessResponse>, response: Response<SuccessResponse>) {
                                     Toast.makeText(context, "Pay method deleted", Toast.LENGTH_SHORT).show()
                                     dialog.dismiss()
                                 }
@@ -85,7 +109,6 @@ class PaymentsAdapter (var context: Context, var payments:List<Payment> = arrayL
             }
 
             itemView.main_info.text = payment.name
-            itemView.add_info.text = payment.description
         }
     }
 

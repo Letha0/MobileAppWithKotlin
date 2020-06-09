@@ -11,11 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import book.store.api.RetrofitClient
-import book.store.api.StringResponse
-import book.store.api.SuccessResponse
+import book.store.api.SessionManager
 import book.store.models.CoverType
 import book.store.ui.coverType.CoverTypeEditFragment
-import book.store.ui.publHouse.PublHouseEditFragment
 import kotlinx.android.synthetic.main.row_item.view.*
 import retrofit2.Call
 import retrofit2.Response
@@ -37,6 +35,8 @@ RecyclerView.Adapter<CoverTypeAdapter.ViewHolder>(){
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
 
         lateinit var session: SessionManager
+
+        var seeBtn = view.findViewById<Button>(R.id.btn_see)
         var editBtn = view.findViewById<Button>(R.id.btn_edit)
         var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
         var context: Context = itemView.context
@@ -47,6 +47,26 @@ RecyclerView.Adapter<CoverTypeAdapter.ViewHolder>(){
         fun bindCoverType(coverType: CoverType){
 
             session = SessionManager(context)
+
+            seeBtn.setOnClickListener{
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                with(dialogBuilder)
+                {
+                    setTitle("Cover type details")
+                    setMessage("Name: " + coverType.name)
+                }
+                    .setCancelable(false)
+                    .setPositiveButton("Ok"){dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = dialogBuilder.create()
+                alert.show()
+
+
+
+            }
+
             editBtn.setOnClickListener {
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.myFragment, CoverTypeEditFragment())
@@ -62,13 +82,13 @@ RecyclerView.Adapter<CoverTypeAdapter.ViewHolder>(){
                     .setCancelable(false)
                     .setPositiveButton("Delete") { dialog, id ->
                         RetrofitClient.instance.deleteCoverType(session.TOKEN, coverType.id)
-                            .enqueue(object : retrofit2.Callback<StringResponse>{
-                                override fun onFailure(call: Call<StringResponse>, t: Throwable) {
+                            .enqueue(object : retrofit2.Callback<String>{
+                                override fun onFailure(call: Call<String>, t: Throwable) {
                                     Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
                                     dialog.dismiss()
                                 }
 
-                                override fun onResponse(call: Call<StringResponse>, response: Response<StringResponse>) {
+                                override fun onResponse(call: Call<String>, response: Response<String>) {
                                     Toast.makeText(context, "Cover type deleted", Toast.LENGTH_SHORT).show()
                                     dialog.dismiss()
                                 }

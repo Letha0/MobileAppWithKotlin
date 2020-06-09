@@ -156,16 +156,17 @@
                     android:layout_width="0dip"
                     android:layout_height="130dp"
                     android:layout_weight="1"
-                    android:textSize="20sp"
-                    tools:text="Logout"
-                    android:onClick="logout"/>
+                    android:drawableTop="@drawable/logout"
+                    android:onClick="logout"
+                    android:text="Logout"/>
 
                 <Button
                     android:id="@+id/btn12"
                     android:layout_width="0dip"
                     android:layout_height="130dp"
                     android:layout_weight="1"
-                    tools:ignore="VectorDrawableCompat"/>
+                    android:text="Click without consequences ;)"
+                    android:onClick="home"/>
             </LinearLayout>
 
 

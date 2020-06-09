@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import book.store.api.RetrofitClient
+import book.store.api.SessionManager
 import book.store.models.Opinion
 import kotlinx.android.synthetic.main.opinion_row_item.view.*
 import retrofit2.Call
@@ -33,12 +34,36 @@ class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
 
     lateinit var session: SessionManager
+
+    var seeBtn = view.findViewById<Button>(R.id.btn_see)
     var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
     var context: Context = itemView.context
 
     fun bindOpinion(opinion: Opinion) {
 
         session = SessionManager(context)
+
+        seeBtn.setOnClickListener{
+
+            val dialogBuilder = AlertDialog.Builder(context)
+            with(dialogBuilder)
+            {
+                setTitle("Opinion details")
+                setMessage("Title: " + opinion.title + System.lineSeparator() +
+                        "Content: " +opinion.content + System.lineSeparator() +
+                        "Author: " + opinion.user.id + System.lineSeparator() +
+                        "About: " + opinion.book.title + /*" " + opinion.book.authorId +*/ System.lineSeparator())
+            }
+                .setCancelable(false)
+                .setPositiveButton("Ok"){dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = dialogBuilder.create()
+            alert.show()
+
+
+
+        }
 
         deleteBtn.setOnClickListener{               //see delete alert and confir or dismiss
             val dialogBuilder = AlertDialog.Builder(context)
@@ -75,7 +100,6 @@ class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
         itemView.main_info.text = opinion.id.toString()
         itemView.add_info.text = opinion.title
-        itemView.content.text = opinion.content
     }
 
 

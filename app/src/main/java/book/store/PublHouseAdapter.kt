@@ -11,11 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import book.store.api.RetrofitClient
+import book.store.api.SessionManager
 import book.store.models.PublishingHouse
-import book.store.ui.payment.PaymentEditFragment
 import book.store.ui.publHouse.PublHouseEditFragment
-import book.store.ui.publHouse.PublHouseFragment
-import kotlinx.android.synthetic.main.fragment_payment.view.*
 import kotlinx.android.synthetic.main.row_item.view.*
 import retrofit2.Call
 import retrofit2.Response
@@ -38,6 +36,8 @@ class PublHouseAdapter(var context: Context, var publHouses:List<PublishingHouse
     class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
         lateinit var session: SessionManager
+
+        var seeBtn = view.findViewById<Button>(R.id.btn_see)
         var editBtn = view.findViewById<Button>(R.id.btn_edit)
         var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
         var context: Context = itemView.context
@@ -48,6 +48,27 @@ class PublHouseAdapter(var context: Context, var publHouses:List<PublishingHouse
         fun bindPublHouse(publHouse: PublishingHouse) {
 
             session = SessionManager(context)
+
+            seeBtn.setOnClickListener{
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                with(dialogBuilder)
+                {
+                    setTitle("Publishing house details")
+                    setMessage("Name: " + publHouse.name + System.lineSeparator() +
+                            "Description: " + publHouse.description)
+                }
+                    .setCancelable(false)
+                    .setPositiveButton("Ok"){dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = dialogBuilder.create()
+                alert.show()
+
+
+
+            }
+
             editBtn.setOnClickListener {
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.myFragment, PublHouseEditFragment())
@@ -89,7 +110,6 @@ class PublHouseAdapter(var context: Context, var publHouses:List<PublishingHouse
             }
 
             itemView.main_info.text = publHouse.name
-            itemView.add_info.text = publHouse.description
 
 
         }

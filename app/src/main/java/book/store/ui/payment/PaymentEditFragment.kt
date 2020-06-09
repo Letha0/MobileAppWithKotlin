@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Payment
 import book.store.requests.PaymentRequest
@@ -29,6 +29,8 @@ class PaymentEditFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         session = SessionManager(requireContext())
+
+        name.text ="Edit payment method"
 
         val name = session.name
         input_name.setText(name)
@@ -53,6 +55,12 @@ class PaymentEditFragment: Fragment() {
                 return@setOnClickListener
             }
 
+            if(description.length < 20) {
+                input_description.error = "Description have to have 20 characters minimum!"
+                input_description.requestFocus()
+                return@setOnClickListener
+            }
+
             RetrofitClient.instance.editPayment(session.TOKEN, session.ID, PaymentRequest(name, description))
                 .enqueue(object : retrofit2.Callback<Payment> {
                     override fun onFailure(call: Call<Payment>, t: Throwable) {
@@ -64,14 +72,9 @@ class PaymentEditFragment: Fragment() {
                             Toast.makeText(requireContext(), "Pay method edited!", Toast.LENGTH_SHORT).show()
                         else
                             Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
-
                     }
 
                 })
-
-
         }
-
-
     }
 }

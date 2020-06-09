@@ -23,7 +23,9 @@
         <activity android:name=".activities.ResetPasswordActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.AdminActivity" />
-        <activity android:name=".SplashScreen" >
+        <activity android:name=".activities.SeeBookActivity" />
+        <activity android:name=".activities.CommentsActivity" />
+        <activity android:name=".activities.SplashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

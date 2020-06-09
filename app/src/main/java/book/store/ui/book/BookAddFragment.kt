@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.AddBookResponse
-import book.store.api.AddUserResponse
 import book.store.api.RetrofitClient
 import book.store.models.*
 import book.store.requests.AddBookRequest
@@ -55,6 +54,8 @@ class BookAddFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         session = SessionManager(requireContext())
+
+        name.text ="Add new book"
 
         inputAuthor = getView()?.findViewById(R.id.input_author) as Spinner
         fetchAuthors()
@@ -165,15 +166,7 @@ class BookAddFragment: Fragment() {
                         else
                             Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
                     }
-
-
                 })
-
-
-
-
-
-
         }
 
 
@@ -272,15 +265,9 @@ class BookAddFragment: Fragment() {
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputSeries?.adapter = arrayAdapter
-
-
                     }
-
-
                 }
-
             })
-
     }
 
     private fun fetchCoverType(){
@@ -305,15 +292,9 @@ class BookAddFragment: Fragment() {
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputCoverType?.adapter = arrayAdapter
-
-
                     }
-
-
                 }
-
             })
-
     }
 
 
@@ -339,14 +320,8 @@ class BookAddFragment: Fragment() {
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputPublHouse?.adapter = arrayAdapter
-
-
                     }
-
-
                 }
-
             })
-
     }
 }

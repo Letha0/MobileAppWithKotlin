@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
+import book.store.activities.AdminActivity
 import book.store.activities.LoginActivity
 import book.store.api.RetrofitClient
 import book.store.api.UserResponse
-import kotlinx.android.synthetic.main.fragment_home.*
+import book.store.ui.order.SeeOrdersFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Call
 import retrofit2.Response
@@ -21,13 +21,8 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
-
+    private val user = "admin@bookstore.io"
     lateinit var session: SessionManager
-    private lateinit var viewModel: ProfileViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,13 +30,41 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
-    // override fun onActivityCreated(savedInstanceState: Bundle?) {
-    //     super.onActivityCreated(savedInstanceState)
-    //     viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-    //  }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         session = SessionManager(requireContext())
+
+        if(session.isLoggedIn())
+        {
+            if(session.EMAIL==user)
+                startActivity(Intent(requireContext(), AdminActivity::class.java))
+        }
+        else{
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)}
+
+
+
+        orders.setOnClickListener{
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.nav_host_fragment, SeeOrdersFragment())
+            fragmentTransaction?.addToBackStack(null)
+            fragmentTransaction?.commit()
+
+        }
+
+        logout.setOnClickListener{
+            session.Logout()
+            Toast.makeText(activity, "You have been logout", Toast.LENGTH_SHORT).show()
+        }
+
+        edit_acc.setOnClickListener{
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.nav_host_fragment, EditProfileFragment())
+            fragmentTransaction?.addToBackStack(null)
+            fragmentTransaction?.commit()
+        }
+
+        user_name.text = session.userEmail
 
 
         val TOKEN = SessionManager.getInstance(requireContext()).TOKEN
@@ -63,14 +86,13 @@ class ProfileFragment : Fragment() {
                         session.getDetailOfUser(response.body()?.email!!)
                         val email = session.EMAIL//response.body()?.email.toString()
 
-                        user_name.text = user_name.text.toString()
-                        user_name.text = email
+                        session.getUserEmail(response.body()?.email!!)
+                        session.getIdUser(response.body()?.id!!)
+                        session.getUserSurname(response.body()?.surname!!)
+                        session.getUserName(response.body()?.name!!)
+
                     }
-                    Toast.makeText(activity, response.body().toString(), Toast.LENGTH_LONG).show()
-
                 }
-
-
             })
     }
 }

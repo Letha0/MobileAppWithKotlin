@@ -11,10 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import book.store.api.RetrofitClient
+import book.store.api.SessionManager
 import book.store.models.Author
-import book.store.models.User
 import book.store.ui.author.AuthorEditFragment
-import book.store.ui.user.UserEditFragment
 import kotlinx.android.synthetic.main.row_item.view.*
 import retrofit2.Call
 import retrofit2.Response
@@ -88,13 +87,13 @@ RecyclerView.Adapter<AuthorAdapter.ViewHolder>() {
                         .setCancelable(false)
                         .setPositiveButton("Delete") { dialog, id ->
                             RetrofitClient.instance.deleteAuthor(session.TOKEN, author.id)
-                                .enqueue(object : retrofit2.Callback<Author>{
-                                    override fun onFailure(call: Call<Author>, t: Throwable) {
+                                .enqueue(object : retrofit2.Callback<String>{
+                                    override fun onFailure(call: Call<String>, t: Throwable) {
                                         Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
                                         dialog.dismiss()
                                     }
 
-                                    override fun onResponse(call: Call<Author>,response: Response<Author>) {
+                                    override fun onResponse(call: Call<String>,response: Response<String>) {
                                         Toast.makeText(context, "Author deleted", Toast.LENGTH_SHORT).show()
                                         dialog.dismiss()
                                     }
@@ -117,7 +116,7 @@ RecyclerView.Adapter<AuthorAdapter.ViewHolder>() {
 
 
             itemView.main_info.text = author.surname
-            itemView.add_info.text = author.name
+            itemView.more_info.text = author.name
         }
 
     }

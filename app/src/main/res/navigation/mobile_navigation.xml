@@ -6,10 +6,10 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="book.store.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_cart"
+        android:name="book.store.ui.cart.CartFragment"
+        android:label="@string/title_cart"
+        tools:layout="@layout/fragment_cart" />
 
     <fragment
         android:id="@+id/navigation_home"
@@ -17,26 +17,12 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
-    <navigation
-        android:id="@+id/navigation_account"
-        app:startDestination="@id/main_fragment" >
-
 
         <fragment
-            android:id="@+id/main_fragment"
-            android:name="book.store.ui.account.AccountFragment"
-            android:label="fragment_main"
-            tools:layout="@layout/fragment_account">
-
-            <action
-                android:id="@+id/navigate_to_profile_fragment"
-                app:destination="@id/profile_fragment"/>
-        </fragment>
-
-        <fragment
-            android:id="@+id/profile_fragment"
+            android:id="@+id/navigation_profile"
             android:name="book.store.ui.profile.ProfileFragment"
-            android:label="fragment_profile"
+            android:label="Account"
             tools:layout="@layout/fragment_profile"/>
-    </navigation>
+
+
 </navigation>

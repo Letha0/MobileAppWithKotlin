@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.PublishingHouse
 import book.store.requests.PublHouseRequest
@@ -30,6 +30,8 @@ class PublHouseEditFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         session = SessionManager(requireContext())
+
+        name.text ="Edit publishing house"
 
         val name = session.name
         input_name.setText(name)
@@ -67,12 +69,7 @@ class PublHouseEditFragment:Fragment() {
                             Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
 
                     }
-
                 })
-
-
         }
-
-
     }
 }

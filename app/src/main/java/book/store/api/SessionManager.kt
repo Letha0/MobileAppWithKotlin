@@ -1,11 +1,10 @@
-package book.store
+package book.store.api
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import book.store.activities.LoginActivity
 import book.store.activities.MainActivity
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -53,15 +52,6 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
             return pref.getString("surname", null)
         }
 
-    val rememberEmail :String?
-        get(){
-            return pref.getString("rememberEmail", null)
-        }
-
-    val rememberPassword :String?
-        get(){
-            return pref.getString("rememberPassword", null)
-        }
 
     //Author Data
     val dateBirth : String?
@@ -101,7 +91,7 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
             return pref.getInt("authorIdToEdit", 0)
         }
 
-    val genreIdToEdit : Int
+    val genreIdToEdit : Int?
         get(){
             return pref.getInt("genreIdToEdit", 0)
         }
@@ -165,7 +155,8 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         @Synchronized
         fun getInstance(context: Context): SessionManager {
             if (mInstance == null) {
-                mInstance = SessionManager(context)
+                mInstance =
+                    SessionManager(context)
             }
             return mInstance as SessionManager
 
@@ -176,6 +167,17 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
     {
         editor.putBoolean(IS_LOGIN,true)
         editor.putString("TOKEN", token)
+        editor.commit()
+    }
+
+    val cookie :String?
+        get(){
+            return pref.getString("cookie", null) }
+
+    fun createCookieSession(cookie:String?)
+    {
+        editor.putBoolean(IS_LOGIN,true)
+        editor.putString("cookie", cookie)
         editor.commit()
     }
 
@@ -190,11 +192,58 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         }
     }
 
-    fun rememberLoginData(email:String,password:String)
-    {
+    val userID :Int
+        get(){
+            return pref.getInt("userID", 0)
+        }
+
+    fun getIdUser(id:Int){
         editor.putBoolean(IS_LOGIN,true)
-        editor.putString("rememberEmail",email)
-        editor.putString("rememberPassword",password)
+        editor.putInt("userID",id)
+        editor.commit()
+    }
+
+    val userEmail :String?
+        get(){
+            return pref.getString("userEmail", null)
+        }
+
+    fun getUserEmail(email:String?){
+        editor.putBoolean(IS_LOGIN,true)
+        editor.putString("userEmail",email)
+        editor.commit()
+    }
+
+    val userSurname :String?
+        get(){
+            return pref.getString("userSurname", null)
+        }
+
+    fun getUserSurname(surname:String?){
+        editor.putBoolean(IS_LOGIN,true)
+        editor.putString("userSurname",surname)
+        editor.commit()
+    }
+
+    val userName :String?
+        get(){
+            return pref.getString("userName", null)
+        }
+
+    fun getUserName(name:String?){
+        editor.putBoolean(IS_LOGIN,true)
+        editor.putString("userName",name)
+        editor.commit()
+    }
+
+    val search :String?
+        get(){
+            return pref.getString("search", null)
+        }
+
+    fun searchTitle(title:String?){
+        editor.putBoolean(IS_LOGIN,true)
+        editor.putString("search",title)
         editor.commit()
     }
 
@@ -205,8 +254,9 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         editor.commit()
     }
 
-    fun getDataToEditUser(name:String,surname:String,emailUser:String){
+    fun getDataToEditUser(id:Int, name:String,surname:String,emailUser:String){
         editor.putBoolean(IS_LOGIN,true)
+        editor.putInt("ID", id)
         editor.putString("name",name)
         editor.putString("surname",surname)
         editor.putString("emailUser",emailUser)
@@ -225,20 +275,47 @@ class SessionManager {  //https://www.youtube.com/watch?v=q3EDQt7GM0A stąd te c
         editor.commit()
     }
 
-    fun getDataToEditBook(id:Int, title:String, authorId:Int, genreId:Int, description: String, seriesId:Int, release:String,coverTypeId:Int,
-    publishingHouseId:Int, price:Float, coverImage:String?){
+    fun getDataToEditBook(id:Int, title:String, authorId:Int, genreId:Int?, description: String, seriesId:Int, release:String,coverTypeId:Int,
+    publishingHouseId:Int?, price:Float, coverImage:String?){
         editor.putBoolean(IS_LOGIN, true)
         editor.putInt("ID", id)
         editor.putString("title",title)
         editor.putInt("authorIdToEdit",authorId)
-        editor.putInt("genreIdToEdit",genreId)
+        genreId?.let { editor.putInt("genreIdToEdit", it) }
         editor.putString("description",description)
         editor.putInt("seriesIdToEdit",seriesId)
         editor.putString("release",release)
         editor.putInt("coverTypeIdToEdit",coverTypeId)
-        editor.putInt("publishingHouseIdToEdit",publishingHouseId)
+        publishingHouseId?.let { editor.putInt("publishingHouseIdToEdit", it) }
         editor.putFloat("price",price)
         editor.putString("coverImage",coverImage)
+        editor.commit()
+    }
+
+    val genre :String?
+        get(){
+            return pref.getString("genre", null)
+        }
+
+    val authorSurname :String
+        get(){
+            return pref.getString("authorSurname", null)
+        }
+
+    val authorName :String
+        get(){
+            return pref.getString("authorName", null)
+        }
+
+    fun getDataToSeeBook(id:Int, title:String, authorSurname:String,authorName:String, genre:String?, description: String, price:Float){
+        editor.putBoolean(IS_LOGIN, true)
+        editor.putInt("ID", id)
+        editor.putString("title",title)
+        editor.putString("authorSurname",authorSurname)
+        editor.putString("authorName",authorName)
+        genre?.let { editor.putString("genre", it) }
+        editor.putString("description",description)
+        editor.putFloat("price",price)
         editor.commit()
     }
 

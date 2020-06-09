@@ -9,7 +9,7 @@ data class Book (
     @SerializedName("author_id")
     val authorId: Int,
     @SerializedName("genre_id")
-    val genreId: Int,
+    val genreId: Int?,
     val description: String,
     @SerializedName("series_id")
     val seriesId: Int,
@@ -17,7 +17,7 @@ data class Book (
     @SerializedName("cover_type_id")
     val coverTypeId: Int,
     @SerializedName("publishing_house_id")
-    val publishingHouseId: Int,
+    val publishingHouseId: Int?,
     val price: Float,
     @SerializedName("cover_image")
     val coverImage: String?,
@@ -31,10 +31,10 @@ data class Book (
    // val photos: String
     val opinions: List<Opinion>,
     val author: Author,
-    val genre: Genre,
+    val genre: Genre?,
     val serie: Serie,
     val covertype: CoverType,
     @SerializedName("publ_house")
-    val publHouse: PublishingHouse
+    val publHouse: PublishingHouse?
 
 )

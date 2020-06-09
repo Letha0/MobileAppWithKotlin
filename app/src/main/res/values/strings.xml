@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">bookstore</string>
+    <string name="app_name">Exlibris.net</string>
     <string name="login">Login</string>
     <string name="forget_password">Forgot password?</string>
     <string name="submit">Submit</string>
@@ -34,6 +34,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_cart">Cart</string>
+    <string name="cart">Cart</string>
 
 
 </resources>

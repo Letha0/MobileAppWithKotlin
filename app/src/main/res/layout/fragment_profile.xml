@@ -6,7 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.profile.ProfileFragment"
-    android:id="@+id/fragment_profile">
+    android:id="@+id/fragment_profile"
+    android:background="#ffffff"
+    android:clickable="true">
 
 
 <ScrollView
@@ -65,25 +67,32 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:orientation="horizontal"
 android:layout_marginTop="60dp"
-    android:layout_marginBottom="60dp">
+    android:layout_marginBottom="60dp"
+    android:baselineAligned="false">
 
 <Button
-    android:id="@+id/btn1"
+    android:id="@+id/orders"
     android:layout_width="0dip"
     android:layout_height="150dp"
-    android:layout_weight="1" />
+    android:layout_weight="1"
+    android:text="ORDERS"
+    android:textSize="30dp"/>
 
 <Button
-    android:id="@+id/btn2"
+    android:id="@+id/edit_acc"
     android:layout_width="0dip"
     android:layout_height="150dp"
-    android:layout_weight="1" />
+    android:layout_weight="1"
+    android:text="Edit account"
+    android:textSize="22dp"/>
 
 <Button
-    android:id="@+id/btn3"
+    android:id="@+id/logout"
     android:layout_width="0dip"
     android:layout_height="150dp"
-    android:layout_weight="1" />
+    android:layout_weight="1"
+    android:text="Logout"
+    android:textSize="22dp"/>
 </LinearLayout>
 </LinearLayout>
         </ScrollView>

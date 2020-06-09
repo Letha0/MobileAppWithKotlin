@@ -94,7 +94,7 @@ class RegisterActivity : AppCompatActivity() {
                             Toast.makeText(applicationContext, response.code().toString(), Toast.LENGTH_LONG).show()
                     }
 
-                })//response.code().toString()
+                })
 
         }
 

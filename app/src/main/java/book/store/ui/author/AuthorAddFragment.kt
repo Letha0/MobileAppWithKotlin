@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.AddAuthorResponse
 import book.store.api.RetrofitClient
-import book.store.models.Author
 import book.store.requests.NewAuthorRequest
 import kotlinx.android.synthetic.main.fragment_author_crud.*
 import retrofit2.Call
@@ -18,6 +17,7 @@ import retrofit2.Response
 
 class AuthorAddFragment : Fragment() {
     lateinit var session: SessionManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +29,8 @@ class AuthorAddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        name.text = "Add new author"
 
         author_send_data.setOnClickListener {
             val name = input_name.text.toString().trim()

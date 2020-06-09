@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.api.SuccessResponse
 import book.store.requests.PaymentRequest
@@ -33,6 +33,8 @@ class PaymentAddFragment: Fragment(){
 
         session = SessionManager(requireContext())
 
+        name.text ="Add new payment method"
+
         send_data.setOnClickListener{
             val name = input_name.text.toString().trim()
             val description = input_description.text.toString().trim()
@@ -47,6 +49,12 @@ class PaymentAddFragment: Fragment(){
 
             if (description.isEmpty()) {
                 input_description.error = "Description required"
+                input_description.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(description.length < 20) {
+                input_description.error = "Description have to have 20 characters minimum!"
                 input_description.requestFocus()
                 return@setOnClickListener
             }

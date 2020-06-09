@@ -11,11 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import book.store.api.RetrofitClient
-import book.store.models.Author
+import book.store.api.SessionManager
 import book.store.models.Genre
-import book.store.ui.author.AuthorEditFragment
 import book.store.ui.genre.GenreEditFragment
-import book.store.ui.genre.GenreFragment
 import kotlinx.android.synthetic.main.row_item.view.*
 import retrofit2.Call
 import retrofit2.Response
@@ -37,6 +35,8 @@ class GenreAdapter (var context: Context, var genres: List<Genre> = arrayListOf(
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
 
         lateinit var session: SessionManager
+
+        var seeBtn = view.findViewById<Button>(R.id.btn_see)
         var editBtn = view.findViewById<Button>(R.id.btn_edit)
         var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
         var context: Context = itemView.context
@@ -47,6 +47,27 @@ class GenreAdapter (var context: Context, var genres: List<Genre> = arrayListOf(
         fun bindGenre(genre:Genre){
 
             session = SessionManager(context)
+
+            seeBtn.setOnClickListener{
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                with(dialogBuilder)
+                {
+                    setTitle("Genre details")
+                    setMessage("Name: " + genre.title + System.lineSeparator()
+                            )
+                }
+                    .setCancelable(false)
+                    .setPositiveButton("Ok"){dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = dialogBuilder.create()
+                alert.show()
+
+
+
+            }
+
             editBtn.setOnClickListener {
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.myFragment, GenreEditFragment())

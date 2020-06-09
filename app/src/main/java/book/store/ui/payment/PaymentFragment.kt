@@ -1,6 +1,5 @@
 package book.store.ui.payment
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,14 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import book.store.PaymentsAdapter
 
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Payment
-import book.store.ui.author.AuthorAddFragment
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.refreshLayout
 import kotlinx.android.synthetic.main.fragment_payment.*
-import okhttp3.internal.notify
 import retrofit2.Call
 import retrofit2.Response
 

@@ -10,11 +10,11 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.*
+import book.store.requests.AddBookRequest
 import kotlinx.android.synthetic.main.fragment_book_crud.*
-import okhttp3.internal.notify
 import retrofit2.Call
 import retrofit2.Response
 
@@ -42,6 +42,8 @@ class BookEditFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         session = SessionManager(requireContext())
+
+        name.text ="Edit book"
 
         inputAuthor = getView()?.findViewById(R.id.input_author) as Spinner
         fetchAuthors()
@@ -158,10 +160,21 @@ class BookEditFragment : Fragment(){
             val coverImage = input_coverImage.text.toString().trim()
 
 
+            RetrofitClient.instance.editBook(session.TOKEN, AddBookRequest(title, description,release,price.toFloat(),coverImage), session.ID,
+            session.authorId, session.genreId, session.seriesId, session.coverTypeId, session.publishingHouseId)
+                .enqueue(object : retrofit2.Callback<Book>{
+                    override fun onFailure(call: Call<Book>, t: Throwable) {
+                        Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                    }
 
+                    override fun onResponse(call: Call<Book>, response: Response<Book>) {
+                        if(response.code()==200){
+                            Toast.makeText(requireContext(), "Book updated!", Toast.LENGTH_SHORT).show()}
+                        else Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                    }
+
+                })
         }
-
-
     }
 
 
@@ -191,15 +204,9 @@ class BookEditFragment : Fragment(){
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputAuthor?.adapter = arrayAdapter
-
-
                     }
-
-
                 }
-
             })
-
     }
 
     private fun fetchGenres(){
@@ -225,15 +232,9 @@ class BookEditFragment : Fragment(){
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputGenre?.adapter = arrayAdapter
-
-
                     }
-
-
                 }
-
             })
-
     }
 
 
@@ -259,15 +260,9 @@ class BookEditFragment : Fragment(){
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputSeries?.adapter = arrayAdapter
-
-
                     }
-
-
                 }
-
             })
-
     }
 
     private fun fetchCoverType(){
@@ -292,15 +287,9 @@ class BookEditFragment : Fragment(){
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputCoverType?.adapter = arrayAdapter
-
-
                     }
-
-
                 }
-
             })
-
     }
 
 
@@ -326,15 +315,9 @@ class BookEditFragment : Fragment(){
                         }
                         val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, item)
                         inputPublHouse?.adapter = arrayAdapter
-
-
                     }
-
-
                 }
-
             })
-
     }
 
 

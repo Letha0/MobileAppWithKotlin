@@ -1,7 +1,5 @@
 package book.store.ui.admin
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -11,8 +9,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
-import book.store.activities.MainActivity
+import book.store.api.SessionManager
 
 class AdminFragment: Fragment() {
 
@@ -24,7 +21,6 @@ class AdminFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_admin, container, false)
     }
 

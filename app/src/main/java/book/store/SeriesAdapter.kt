@@ -11,11 +11,10 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import book.store.api.RetrofitClient
+import book.store.api.SessionManager
 import book.store.api.SuccessResponse
 import book.store.models.Serie
-import book.store.ui.publHouse.PublHouseEditFragment
 import book.store.ui.serie.SeriesEditFragment
-import book.store.ui.serie.SeriesFragment
 import kotlinx.android.synthetic.main.row_item.view.*
 import retrofit2.Call
 import retrofit2.Response
@@ -37,6 +36,8 @@ class SeriesAdapter(var context: Context, val series:List<Serie> = arrayListOf()
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
 
         lateinit var session: SessionManager
+
+        var seeBtn = view.findViewById<Button>(R.id.btn_see)
         var editBtn = view.findViewById<Button>(R.id.btn_edit)
         var deleteBtn = view.findViewById<Button>(R.id.btn_delete)
         var context: Context = itemView.context
@@ -47,6 +48,27 @@ class SeriesAdapter(var context: Context, val series:List<Serie> = arrayListOf()
         fun bindSeries(serie:Serie)
         {
             session = SessionManager(context)
+
+            seeBtn.setOnClickListener{
+
+                val dialogBuilder = AlertDialog.Builder(context)
+                with(dialogBuilder)
+                {
+                    setTitle("Serie details")
+                    setMessage("Name: " + serie.name + System.lineSeparator() +
+                            "Description: " + serie.description + System.lineSeparator() +
+                            "Author: " + serie.author?.name + " " + serie.author?.surname + System.lineSeparator() +
+                            "Publishing house: " + serie.publHouse?.name+ System.lineSeparator())
+                }
+                    .setCancelable(false)
+                    .setPositiveButton("Ok"){dialog, id ->
+                        dialog.dismiss()
+                    }
+                val alert = dialogBuilder.create()
+                alert.show()
+
+            }
+
             editBtn.setOnClickListener {
                 val fragmentTransaction = fragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.myFragment, SeriesEditFragment())

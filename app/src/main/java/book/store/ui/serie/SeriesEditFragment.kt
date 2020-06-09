@@ -10,7 +10,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Author
 import book.store.models.PublishingHouse
@@ -42,6 +42,7 @@ class SeriesEditFragment: Fragment() {
 
         session = SessionManager(requireContext())
 
+        name.text ="Edit serie"
 
         inputAuthor = getView()?.findViewById(R.id.input_author) as Spinner
         fetchAuthors()
@@ -56,7 +57,6 @@ class SeriesEditFragment: Fragment() {
                 input_author.setSelection(idA)
                                 val id = _idsAuthor.get(position)
                 session.getAuthorId(id)
-               // authorPosition = parent?.getItemIdAtPosition(position)!!.toInt()
 
             }
 
@@ -75,7 +75,6 @@ class SeriesEditFragment: Fragment() {
                 input_publHouse.setSelection(idP)
                 var id = _idsPublHouse.get(position)
                 session.getPublHouseId(id)
-                //publHousePosition = parent?.getItemIdAtPosition(position)!!.toInt()
             }
 
         }
@@ -89,6 +88,24 @@ class SeriesEditFragment: Fragment() {
 
             val name = input_name.text.toString().trim()
             val description =input_description.text.toString().trim()
+
+            if(name.isEmpty()){
+                input_name.error = "Name required"
+                input_name.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(description.isEmpty()){
+                input_description.error = "Name required"
+                input_description.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(description.length < 20) {
+                input_description.error = "Description have to have 20 characters minimum!"
+                input_description.requestFocus()
+                return@setOnClickListener
+            }
 
 
         RetrofitClient.instance.editSerie(session.TOKEN, session.ID, EditSerieRequest(name, description, session.authorId, session.publishingHouseId))

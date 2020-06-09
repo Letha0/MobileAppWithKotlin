@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.*
 import book.store.requests.LoginRequest
 import book.store.api.Validation
@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                             }
 
                         if (response.code() == 200 && email == "admin@bookstore.io")
-                        {Toast.makeText(applicationContext, "You are logged in", Toast.LENGTH_LONG).show()
+                        {//Toast.makeText(applicationContext, "You are logged in", Toast.LENGTH_LONG).show()
                             session.createLoginSession(response.body()?.token!!)
 
                             session.getDetailOfUser(email)
@@ -98,8 +98,6 @@ class LoginActivity : AppCompatActivity() {
 
                         if (response.code() == 401)
                             Toast.makeText(applicationContext, "Something went wrong. Check your email and password and try again.", Toast.LENGTH_LONG).show()
-                        else
-                            Toast.makeText(applicationContext, response.code().toString(), Toast.LENGTH_LONG).show()
                     }
 
                 })

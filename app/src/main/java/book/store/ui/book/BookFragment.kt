@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import book.store.CrudBookAdapter
 
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Book
 import kotlinx.android.synthetic.main.fragment_book.*
@@ -23,7 +23,6 @@ class BookFragment : Fragment() {
     lateinit var session: SessionManager
     private lateinit var addBookAdapter: CrudBookAdapter
 
-    private lateinit var viewModel: BookViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +32,9 @@ class BookFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        refreshLayout.setOnRefreshListener {
-            fetchBooks()
-        }
+            refreshLayout.setOnRefreshListener {
+                fetchBooks()
+            }
 
         book_recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
@@ -46,6 +45,7 @@ class BookFragment : Fragment() {
             fragmentTransaction?.replace(R.id.myFragment, BookAddFragment())
             fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
+
         }
     }
 

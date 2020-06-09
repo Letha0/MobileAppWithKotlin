@@ -6,7 +6,7 @@ import android.os.CountDownTimer
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.ui.admin.AdminFragment
 import book.store.ui.author.AuthorFragment
 import book.store.ui.book.BookFragment
@@ -125,6 +125,13 @@ class AdminActivity : AppCompatActivity() {
     fun logout(v: View) {
 
         SessionManager.getInstance(applicationContext).Logout()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+
+    }
+
+    fun home(v: View) {
+
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
 

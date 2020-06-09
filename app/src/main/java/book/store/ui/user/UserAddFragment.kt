@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.activities.AdminActivity
-import book.store.activities.LoginActivity
 import book.store.api.AddUserResponse
 import book.store.api.RetrofitClient
 import book.store.api.Validation
@@ -68,14 +67,8 @@ class UserAddFragment: Fragment() {
                         }
                         else Toast.makeText(activity, response.code().toString(), Toast.LENGTH_SHORT).show()
                     }
-
-
                 })
-
-
         }
-
-
 
     }
 
@@ -85,6 +78,18 @@ class UserAddFragment: Fragment() {
 
 private fun dataValid(email:String, password:String, name:String, surname:String, role:String) :Boolean
 {
+    if(name.isEmpty()) {
+        add_name.error = "Name required"
+        add_name.requestFocus()
+        return false
+    }
+
+    if(surname.isEmpty()) {
+        add_surname.error = "Surname required"
+        add_surname.requestFocus()
+        return false
+    }
+
     if(email.isEmpty()) {
         add_email.error = "Email required"
         add_email.requestFocus()
@@ -109,17 +114,7 @@ private fun dataValid(email:String, password:String, name:String, surname:String
         return false
     }
 
-    if(name.isEmpty()) {
-        add_name.error = "Name required"
-        add_name.requestFocus()
-        return false
-    }
 
-    if(surname.isEmpty()) {
-        add_surname.error = "Surname required"
-        add_surname.requestFocus()
-        return false
-    }
 
     if(role.isEmpty())
     {
@@ -127,6 +122,15 @@ private fun dataValid(email:String, password:String, name:String, surname:String
         add_role.requestFocus()
         return false
     }
+
+    if(role!="admin" && role!="customer")
+    {
+        add_role.error="Enter proper role"
+        add_role.requestFocus()
+        return false
+    }
+
+
     return true
 }
 

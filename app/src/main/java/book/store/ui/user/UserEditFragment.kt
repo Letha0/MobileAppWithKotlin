@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
+import book.store.api.SuccessResponse
 import book.store.api.Validation
 import kotlinx.android.synthetic.main.fragment_edit_user.*
+import retrofit2.Call
+import retrofit2.Response
 
 class UserEditFragment: Fragment() {
 
@@ -36,7 +40,6 @@ lateinit var session: SessionManager
         user_edit_send.setOnClickListener{
 
             val email = edit_email.text.toString().trim()
-            val password = edit_password.text.toString().trim()
             val name = edit_name.text.toString().trim()
             val surname = edit_surname.text.toString().trim()
 
@@ -66,7 +69,24 @@ lateinit var session: SessionManager
                 return@setOnClickListener
             }
 
-            RetrofitClient //later jak będzie na serwie metoda
+            RetrofitClient.instance.updateUser(session.TOKEN, session.ID)
+                .enqueue(object :retrofit2.Callback<SuccessResponse>{
+                    override fun onFailure(call: Call<SuccessResponse>, t: Throwable) {
+                        Toast.makeText(activity, t.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onResponse(
+                        call: Call<SuccessResponse>,
+                        response: Response<SuccessResponse>
+                    ) {
+                        if(response.code()==200){
+                            Toast.makeText(requireContext(), "User edited", Toast.LENGTH_SHORT).show()
+                        }
+                        else
+                            Toast.makeText(requireContext(), response.code().toString(), Toast.LENGTH_SHORT).show()
+                    }
+
+                })
 
         }
     }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import book.store.R
-import book.store.SessionManager
+import book.store.api.SessionManager
 import book.store.api.RetrofitClient
 import book.store.models.Genre
 import book.store.requests.NewGenreRequest
@@ -28,6 +28,8 @@ override fun onCreateView(
         super.onViewCreated(view, savedInstanceState)
 
         session = SessionManager(requireContext())
+
+        name.text ="Add new genre"
 
         send_data.setOnClickListener{
             val title = input_title.text.toString().trim()
